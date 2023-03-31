@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/css/style.css" rel="stylesheet" />
+    <title>Registro</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="form-container">
+        <form action="">
+          <h1>Registro</h1>
+          <p>Subir foto de la mascota</p>
+          <input class="field" type="file" name="pic" required />
+          <input
+            class="field"
+            type="number"
+            placeholder="Num. serie"
+            name="num-s"
+            required
+          />
+          <input
+            type="text"
+            class="field"
+            placeholder="Nombre"
+            name="name-pet"
+            required
+          />
+          <input
+            type="number"
+            class="field"
+            placeholder="Edad"
+            name="age"
+            required
+          />
+          <input
+            type="text"
+            class="field"
+            placeholder="Raza"
+            name="breed"
+            required
+          />
+          <input
+            type="text"
+            class="field"
+            placeholder="Genero"
+            name="gender"
+            required
+          />
+          <input
+            type="text"
+            placeholder="Enfermedad visible(descripcion breve)"
+            name="sick"
+            required
+            class="field"
+          />
+          <input
+            type="text"
+            placeholder="Direccion"
+            name="adress"
+            class="field"
+          />
+          <input
+            type="number"
+            placeholder="Num. Telefonico"
+            name="contact"
+            required
+            class="field"
+          />
+          <input
+            type="number"
+            placeholder="Num. Telefonico(2)"
+            name="contact-2"
+            class="field"
+          />
+          <p>Su mascota se encuentra esterilizada?</p>
+          <select class="field">
+            <option disabled hidden selected></option>
+            <option>Si</option>
+            <option>No</option>
+          </select>
+
+          <h2>Cuenta del Usuario</h2>
+          <input
+            type="email"
+            class="field"
+            placeholder="E-mail"
+            name="email"
+            required
+          />
+
+          <input
+            type="password"
+            class="field"
+            placeholder="Contraseña"
+            name="password"
+            required
+          />
+
+          <input
+            type="password"
+            class="field"
+            placeholder="Confirma contraseña"
+            name="password"
+            required
+          />
+          <button type="submit" class="form-btn">Registrar</button>
+          <button type="submit" class="form-btn">Regresar</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
