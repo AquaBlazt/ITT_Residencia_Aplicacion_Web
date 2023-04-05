@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="esp">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -13,70 +13,62 @@
         <form action="post">
           <h1>Registro</h1>
           <p>Subir foto de la mascota</p>
-          <input class="field" type="file" name="pic" required />
+          <input class="field" type="file" name="foto" required />
           <input
             class="field"
             type="number"
             placeholder="Num. serie"
-            name="num-s"
+            name="num_serie"
             required
           />
           <input
             type="text"
             class="field"
             placeholder="Nombre"
-            name="name-pet"
+            name="nombre"
             required
           />
           <input
             type="number"
             class="field"
             placeholder="Edad"
-            name="age"
+            name="edad"
             required
           />
-          <input
-            type="text"
-            class="field"
-            placeholder="Raza"
-            name="breed"
-            required
-          />
-          <input
-            type="text"
-            class="field"
-            placeholder="Genero"
-            name="gender"
-            required
-          />
+          <p>Genero</p>
+          <select class="field" name="genero">
+            <option disabled hidden selected></option>
+            <option>Macho</option>
+            <option>Hembra</option>
+          </select>
           <input
             type="text"
             placeholder="Enfermedad visible(descripcion breve)"
-            name="sick"
+            name="enfermedad"
             required
             class="field"
           />
           <input
             type="text"
             placeholder="Direccion"
-            name="adress"
+            name="direccion"
             class="field"
           />
           <input
             type="number"
             placeholder="Num. Telefonico"
-            name="contact"
+            name="num_telefonico"
             required
             class="field"
           />
           <input
             type="number"
             placeholder="Num. Telefonico(2)"
-            name="contact-2"
+            name="num_telefonico_extra"
             class="field"
           />
           <p>Su mascota se encuentra esterilizada?</p>
-          <select class="field">
+          <select class="field" name="esterilizada">
             <option disabled hidden selected></option>
             <option>Si</option>
             <option>No</option>
@@ -92,10 +84,18 @@
           />
 
           <input
+            type="email"
+            class="field"
+            placeholder="Confirma E-mail"
+            name="email"
+            required
+          />
+
+          <input
             type="password"
             class="field"
             placeholder="Contraseña"
-            name="password"
+            name="contraseña"
             required
           />
 
