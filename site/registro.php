@@ -1,3 +1,6 @@
+<?php
+require '\residencia\includes\database.php';
+?>
 <!DOCTYPE html>
 <html lang="esp">
   <head>
