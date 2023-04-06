@@ -1,3 +1,6 @@
+<?php
+require '\residencia\includes\database.php';
+?>
 <!DOCTYPE html>
 <html lang="esp">
   <head>
@@ -5,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/css/style.css" rel="stylesheet" />
-    <title>Editar</title>
+    <title>Eliminar admin</title>
   </head>
   <body></body>
 </html>
