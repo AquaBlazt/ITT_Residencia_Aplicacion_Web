@@ -1,5 +1,35 @@
 <?php
 require '\residencia\includes\database.php';
+$sql= "INSERT INTO mascotas (foto,num_serie,nombre,edad,genero,enfermedad,direccion,num_telefonico,
+num_telefonico_extra,esterilizado,email,contraseña)
+VALUES(?,?,?,?,?,?,?,?,?,?,?,?";
+
+$stmt= mysqli_prepare($conn, $sql);
+
+if($stmt===false)
+{
+  echo mysqli_error($conn);
+}
+else
+{
+  mysqli_stmt_bind_param($stmt, "sss", 
+  $_POST['foto'],$_POST['num_serie'],$_POST['nombre'],$_POST['edad'],$_POST['genero'],$_POST['enfermedad'],
+  $_POST['direccion'],$_POST['num_telefonico'],$_POST['num_telefonico_extra'],$_POST['esterilizado'],
+  $_POST['email'],$_POST['contraseña']);
+
+  if(mysqli_stmt_execute($stmt))
+  {
+    $id=mysqli_insert_id($conn);
+    echo "Se inserto correctamente la informacion con el ID: $id";
+
+  }
+  else
+  {
+    echo mysqli_stmt_error($stmt);
+  }
+}
+
+var_dump($_POST);
 ?>
 <!DOCTYPE html>
 <html lang="esp">
@@ -13,33 +43,35 @@ require '\residencia\includes\database.php';
   <body>
     <div class="container">
       <div class="form-container">
-        <form action="post">
+        <form method="post">
           <h1>Registro</h1>
           <p>Subir foto de la mascota</p>
-          <input class="field" type="file" name="foto" required />
+          <input class="field" type="file" name="foto" id="foto"  />
           <input
             class="field"
             type="number"
             placeholder="Num. serie"
             name="num_serie"
-            required
+            
           />
           <input
             type="text"
             class="field"
             placeholder="Nombre"
             name="nombre"
-            required
+            id="nombre"
+            
           />
           <input
             type="number"
             class="field"
             placeholder="Edad"
             name="edad"
-            required
+            id="edad"
+            
           />
           <p>Genero</p>
-          <select class="field" name="genero">
+          <select class="field" name="genero" id="genero">
             <option disabled hidden selected></option>
             <option>Macho</option>
             <option>Hembra</option>
@@ -48,30 +80,32 @@ require '\residencia\includes\database.php';
             type="text"
             placeholder="Enfermedad visible(descripcion breve)"
             name="enfermedad"
-            required
+            id="enfermedad"             
             class="field"
           />
           <input
             type="text"
             placeholder="Direccion"
             name="direccion"
+            id="direccion"
             class="field"
           />
           <input
             type="number"
             placeholder="Num. Telefonico"
             name="num_telefonico"
-            required
+            id="num_telefonico"
             class="field"
           />
           <input
             type="number"
             placeholder="Num. Telefonico(2)"
             name="num_telefonico_extra"
+            id="num_telefonico_extra"
             class="field"
           />
           <p>Su mascota se encuentra esterilizada?</p>
-          <select class="field" name="esterilizada">
+          <select class="field" name="esterilizado" id="esterilizado">
             <option disabled hidden selected></option>
             <option>Si</option>
             <option>No</option>
@@ -83,7 +117,8 @@ require '\residencia\includes\database.php';
             class="field"
             placeholder="E-mail"
             name="email"
-            required
+            id="email"
+           
           />
 
           <input
@@ -91,7 +126,6 @@ require '\residencia\includes\database.php';
             class="field"
             placeholder="Confirma E-mail"
             name="email"
-            required
           />
 
           <input
@@ -99,7 +133,6 @@ require '\residencia\includes\database.php';
             class="field"
             placeholder="Contraseña"
             name="contraseña"
-            required
           />
 
           <input
@@ -107,7 +140,6 @@ require '\residencia\includes\database.php';
             class="field"
             placeholder="Confirma contraseña"
             name="password"
-            required
           />
           <button type="submit" class="form-btn">Registrar</button>
           <button type="submit" class="form-btn">Regresar</button>
@@ -116,3 +148,4 @@ require '\residencia\includes\database.php';
     </div>
   </body>
 </html>
+ <!-- required -->
