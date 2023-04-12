@@ -2,7 +2,7 @@
 require '\residencia\includes\database.php';
 $sql= "INSERT INTO mascotas (foto,num_serie,nombre,edad,genero,enfermedad,direccion,num_telefonico,
 num_telefonico_extra,esterilizado,email,contraseña)
-VALUES(?,?,?,?,?,?,?,?,?,?,?,?";
+VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
 
 $stmt= mysqli_prepare($conn, $sql);
 
