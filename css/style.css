@@ -1,3 +1,6 @@
+@import url("https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css");
+
+/*
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap");
 
 * {
@@ -11,7 +14,7 @@
   font-family: "Montserrat", sans-serif;
 }
 
-/* ESTILO DE TITULOS Y SUBTITULOS */
+
 h1 {
   text-align: center;
   padding-bottom: 300px;
@@ -27,9 +30,7 @@ h2 {
   font-size: 25px;
   color: #454545;
 }
-/* ESTILO DE TITULOS Y SUBTITULOS */
 
-/* ESTILO DEL FORMULARIO */
 .form-container {
   min-height: 100vh;
   display: flex;
@@ -48,9 +49,7 @@ h2 {
   text-align: center;
   width: 500px;
 }
-/* ESTILO DEL FORMULARIO */
 
-/* ESTILO DE LOS LABELS PARA ESCRIBIR USUARIO Y CONTRASEÑA */
 .field {
   width: 100%;
   padding: 10px 15px;
@@ -60,9 +59,7 @@ h2 {
   border-radius: 5px;
 }
 
-/* ESTILO DE LOS LABELS PARA ESCRIBIR USUARIO Y CONTRASEÑA */
 
-/* ESTILO DE BOTONES */
 .form-btn {
   background-color: #4caf50;
   color: white;
@@ -81,7 +78,7 @@ h2 {
   color: white;
 }
 
-/* ESTILO DE BOTONES */
+
 
 #registro {
   font-style: italic;
@@ -106,3 +103,4 @@ h2 {
 .position-logo {
   margin-right: 150px;
 }
+*/

@@ -1,5 +1,6 @@
 <?php
 require '\residencia\includes\database.php';
+$conn=getDB();
 ?>
 <!DOCTYPE html>
 <html lang="esp">
@@ -13,19 +14,21 @@ require '\residencia\includes\database.php';
   <body>
     <div class="container">
       <div class="form-container">
-        <form action="php/login.php" method="post">
+        <form action="" method="post">
+        <a href="registro.php">Registro</a>
           <h1>Inicio de sesion</h1>
           <input
             type="text"
-            required
+            
             placeholder="Usuario"
             class="field"
-            name="username"
+            name="email"
+            id="email"
           />
 
           <input
             type="password"
-            required
+            
             placeholder="Contraseña"
             class="field"
             name="password"
@@ -34,18 +37,7 @@ require '\residencia\includes\database.php';
           <button type="submit" class="form-btn" name="log-in">
             Iniciar sesion
           </button>
-          <div class="position-logo">
-            <img
-              src="/resources/gobierno-mexico-logo.png"
-              alt="Logo del gobierno de Mexico"
-              class="gob-mx-logo"
-            />
-            <img
-              src="/resources/secretaria-salud-logo.png"
-              alt="Logo de Scretaria de Salud mexicana"
-              class="secretaria-logo"
-            />
-          </div>
+          
         </form>
       </div>
     </div>

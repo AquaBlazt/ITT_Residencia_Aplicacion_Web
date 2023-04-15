@@ -1,35 +1,133 @@
 <?php
 require '\residencia\includes\database.php';
-$sql= "INSERT INTO mascotas (foto,num_serie,nombre,edad,genero,enfermedad,direccion,num_telefonico,
-num_telefonico_extra,esterilizado,email,contraseña)
-VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
-
-$stmt= mysqli_prepare($conn, $sql);
-
-if($stmt===false)
+$errors=[];
+$pic='';
+$serial_number='';
+$mascot_name='';
+$age='';
+//$gender='';
+$sickness='';
+$address='';
+$phone_number='';
+$phone_number_extra='';
+//$sterilized='';
+$name='';
+$email='';
+$password_hash='';
+$password_hash_confirmation='';
+if($_SERVER["REQUEST_METHOD"]=="POST")
 {
-  echo mysqli_error($conn);
+$pic = $_POST['pic'];
+$serial_number= $_POST['serial_number'];
+$mascot_name= $_POST['mascot_name'];
+$age= $_POST['age'];
+//$gender= $_POST['gender'];
+$sickness= $_POST['sickness'];
+$address= $_POST['address'];
+$phone_number= $_POST['phone_number'];
+$phone_number_extra= $_POST['phone_number_extra'];
+//$sterilized= $_POST['sterilized'];
+$name= $_POST['name'];
+$email= $_POST['email'];
+$password_hash= $_POST['password_hash'];
+$password_hash_confirmation=$_POST['password_hash_confirmation'];
+
+if($pic=='')
+{
+  $errors[]='Se requiere una foto de la mascota';
 }
-else
+
+if($serial_number=='')
 {
-  mysqli_stmt_bind_param($stmt, "sss", 
-  $_POST['foto'],$_POST['num_serie'],$_POST['nombre'],$_POST['edad'],$_POST['genero'],$_POST['enfermedad'],
-  $_POST['direccion'],$_POST['num_telefonico'],$_POST['num_telefonico_extra'],$_POST['esterilizado'],
-  $_POST['email'],$_POST['contraseña']);
+  $errors[]='Se requiere un numero de serie';
+}
+if($mascot_name=='')
+{
+  $errors[]='Se requiere el nombre de la mascota';
+}
+if($age=='')
+{
+  $errors[]='Se requiere la edad de la mascota';
+}
+//if($_POST['gender']=='')
+//{
+//  $errors[]='Se requiere el genero de la mascota';
+//}
+if($sickness=='')
+{
+  $errors[]='Puede ser nula la enfermedad';
+}
+if($address=='')
+{
+  $errors[]='Se requiere una direccion del dueño';
+}
+if($phone_number=='')
+{
+  $errors[]='Se requiere al menos un numero telefonico';
+}
+if($phone_number_extra=='')
+{
+  $errors[]='Puede ser nulo el numero extra';
+}
+//if($_POST['sterilized']=='')
+//{
+//  $errors[]='Se requiere saber si la mascota esta esterilizada';
+//}
+if($name=='')
+{
+  $errors[]='Se requiere el nombre del dueño';
+}
+if($email=='')
+{
+  $errors[]='Se requiere un E-mail valido';
+}
+if($password_hash=='')
+{
+  $errors[]='Se requiere una contraseña';
+}
+if($password_hash_confirmation=='')
+{
+  $errors[]='Se requiere confirmar la contraseña';
+}
 
-  if(mysqli_stmt_execute($stmt))
+if(empty($errors))
+{
+$conn=getDB();
+
+  $sql= "INSERT INTO registro (pic,serial_number,mascot_name,age,gender,sickness,
+  address,phone_number,phone_number_extra,sterilized,name,email,password_hash)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+      
+  $stmt= mysqli_prepare($conn, $sql);
+  
+  if($stmt===false)
   {
-    $id=mysqli_insert_id($conn);
-    echo "Se inserto correctamente la informacion con el ID: $id";
-
+    echo mysqli_error($conn);
   }
   else
   {
-    echo mysqli_stmt_error($stmt);
-  }
+
+    mysqli_stmt_bind_param($stmt, "sssssssssssss", $pic, $serial_number, $mascot_name,
+    $age, $gender, $sickness, $address, $phone_number,
+    $phone_number_extra, $sterilized, $name, $email, $password_hash);  
+if(mysqli_stmt_execute($stmt))
+{
+  $id = mysqli_insert_id($conn);
+  echo "Se inserto la informacion con el ID: $id";
+}
+else
+{
+  echo mysqli_stmt_error($stmt);
 }
 
-var_dump($_POST);
+
+
+    
+  }
+ }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="esp">
@@ -39,110 +137,177 @@ var_dump($_POST);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/css/style.css" rel="stylesheet" />
     <title>Registro</title>
+    <?php if (! empty($errors)): ?>
+      <ul>
+        <?php foreach ($errors as $error): ?>
+          <li><?= $error ?></li>
+        <?php endforeach; ?>
+      </ul>
+ <?php endif; ?>
   </head>
   <body>
     <div class="container">
       <div class="form-container">
         <form method="post">
-          <h1>Registro</h1>
-          <p>Subir foto de la mascota</p>
-          <input class="field" type="file" name="foto" id="foto"  />
+        <a href="index.php">Inicio</a>
+          <h2>Registro de la mascota</h2>
+<div>
+
+          <label for="pic">Foto</label>
+          <input class="field" type="file" name="pic" id="pic"/>
+</div>
+
+<div>
+<label for="serial_number">Num. de serie</label>
           <input
             class="field"
             type="number"
             placeholder="Num. serie"
-            name="num_serie"
-            
+            name="serial_number"  
+            id="serial_number" 
+            value="<?= htmlspecialchars($serial_number); ?>"
           />
+</div>
+
+<div>
+<label for="mascot_name">Nombre</label>
           <input
             type="text"
             class="field"
             placeholder="Nombre"
-            name="nombre"
-            id="nombre"
-            
+            name="mascot_name"
+            id="mascot_name"
+            value="<?= htmlspecialchars($mascot_name); ?>"
           />
+</div>
+
+<div>
+<label for="age">Edad</label>
           <input
             type="number"
             class="field"
             placeholder="Edad"
-            name="edad"
-            id="edad"
-            
+            name="age"
+            id="age"   
+            value="<?= htmlspecialchars($age); ?>"        
           />
-          <p>Genero</p>
-          <select class="field" name="genero" id="genero">
+</div>
+
+<div>
+<label for="gender">Genero</label>
+          <select class="field" name="gender" id="gender">
             <option disabled hidden selected></option>
             <option>Macho</option>
             <option>Hembra</option>
           </select>
-          <input
-            type="text"
-            placeholder="Enfermedad visible(descripcion breve)"
-            name="enfermedad"
-            id="enfermedad"             
-            class="field"
-          />
+</div>
+
+<div>
+<label for="sickness">Enfermedad Visible</label>
+        <textarea name="sickness" id="sickness" cols="40" rows="12" placeholder="Descripcion"><?= htmlspecialchars($sickness); ?></textarea>
+</div>
+
+<div>
+<label for="address">Direccion</label>
           <input
             type="text"
             placeholder="Direccion"
-            name="direccion"
-            id="direccion"
+            name="address"
+            id="address"
             class="field"
+            value="<?= htmlspecialchars($address); ?>"
           />
+</div>
+
+<div>
+<label for="phone_number">Num. Telefonico</label>
           <input
             type="number"
             placeholder="Num. Telefonico"
-            name="num_telefonico"
-            id="num_telefonico"
+            name="phone_number"
+            id="phone_number"
             class="field"
+            value="<?= htmlspecialchars($phone_number); ?>"
           />
+</div>
+
+<div>
+<label for="phone_number_extra">2do. Num. Telefonico</label>
           <input
             type="number"
-            placeholder="Num. Telefonico(2)"
-            name="num_telefonico_extra"
-            id="num_telefonico_extra"
+            placeholder="Num. Telefonico"
+            name="phone_number_extra"
+            id="phone_number_extra"
             class="field"
+            value="<?= htmlspecialchars($phone_number_extra); ?>"
           />
-          <p>Su mascota se encuentra esterilizada?</p>
-          <select class="field" name="esterilizado" id="esterilizado">
+</div>
+
+<div>
+<label for="sterilized">Su mascota se encuentra esterilizada?</label>
+          <select class="field" name="sterilized" id="sterilized">
             <option disabled hidden selected></option>
             <option>Si</option>
             <option>No</option>
           </select>
+</div>
+
 
           <h2>Cuenta del Usuario</h2>
+
+<div>
+  <label for="name">Nombre</label>
+          <input
+            type="text"
+            class="field"
+            placeholder="Nombre"
+            name="name"
+            id="name"
+            value=""<?= htmlspecialchars($name); ?>""          
+          />
+</div>
+
+<div>
+<label for="email">E-mail</label>
           <input
             type="email"
             class="field"
             placeholder="E-mail"
             name="email"
-            id="email"
-           
+            id="email"   
+            value="<?= htmlspecialchars($email); ?>"       
           />
+</div>
 
-          <input
-            type="email"
-            class="field"
-            placeholder="Confirma E-mail"
-            name="email"
-          />
-
+<div>
+<label for="password_hash">Contraseña</label>
           <input
             type="password"
             class="field"
             placeholder="Contraseña"
-            name="contraseña"
+            name="password_hash"
+            id="password_hash"
+            value="<?= htmlspecialchars($password_hash); ?>"
           />
+</div>
 
+<div>
+<label for="password_hash_confirmation">Confirmar contraseña</label>
           <input
             type="password"
             class="field"
             placeholder="Confirma contraseña"
-            name="password"
+            name="password_hash_confirmation"
+            id="password_hash_confirmation"
+            value="<?= htmlspecialchars($password_hash_confirmation); ?>"
+            
           />
-          <button type="submit" class="form-btn">Registrar</button>
+</div>
+
+
           <button type="submit" class="form-btn">Regresar</button>
+          <button type="submit" class="form-btn">Registrar</button>
+          
         </form>
       </div>
     </div>
