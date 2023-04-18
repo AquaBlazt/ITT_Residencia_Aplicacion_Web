@@ -5,38 +5,38 @@ $pic='';
 $serial_number='';
 $mascot_name='';
 $age='';
-//$gender='';
+$gender='';
 $sickness='';
 $address='';
 $phone_number='';
 $phone_number_extra='';
-//$sterilized='';
+$sterilized='';
 $name='';
 $email='';
-$password_hash='';
-$password_hash_confirmation='';
+$password='';
+$password_confirmation='';
+
 if($_SERVER["REQUEST_METHOD"]=="POST")
 {
 $pic = $_POST['pic'];
 $serial_number= $_POST['serial_number'];
 $mascot_name= $_POST['mascot_name'];
 $age= $_POST['age'];
-//$gender= $_POST['gender'];
+$gender= filter_input(INPUT_POST, 'gender', FILTER_VALIDATE_INT);
 $sickness= $_POST['sickness'];
 $address= $_POST['address'];
 $phone_number= $_POST['phone_number'];
 $phone_number_extra= $_POST['phone_number_extra'];
-//$sterilized= $_POST['sterilized'];
+$sterilized= filter_input(INPUT_POST, 'sterilized', FILTER_VALIDATE_INT);
 $name= $_POST['name'];
 $email= $_POST['email'];
-$password_hash= $_POST['password_hash'];
-$password_hash_confirmation=$_POST['password_hash_confirmation'];
+$password= $_POST['password'];
+$password_confirmation=$_POST['password_confirmation'];
 
 if($pic=='')
 {
   $errors[]='Se requiere una foto de la mascota';
 }
-
 if($serial_number=='')
 {
   $errors[]='Se requiere un numero de serie';
@@ -49,13 +49,9 @@ if($age=='')
 {
   $errors[]='Se requiere la edad de la mascota';
 }
-//if($_POST['gender']=='')
-//{
-//  $errors[]='Se requiere el genero de la mascota';
-//}
-if($sickness=='')
+if($gender=='')
 {
-  $errors[]='Puede ser nula la enfermedad';
+  $errors[]='Se requiere el genero de la mascota';
 }
 if($address=='')
 {
@@ -65,35 +61,33 @@ if($phone_number=='')
 {
   $errors[]='Se requiere al menos un numero telefonico';
 }
-if($phone_number_extra=='')
+if($sterilized=='')
 {
-  $errors[]='Puede ser nulo el numero extra';
+  $errors[]='Se requiere saber si la mascota esta esterilizada';
 }
-//if($_POST['sterilized']=='')
-//{
-//  $errors[]='Se requiere saber si la mascota esta esterilizada';
-//}
 if($name=='')
 {
   $errors[]='Se requiere el nombre del dueño';
 }
-if($email=='')
+if(! filter_var($email, FILTER_VALIDATE_EMAIL))
 {
   $errors[]='Se requiere un E-mail valido';
 }
-if($password_hash=='')
+if($password == '')
 {
   $errors[]='Se requiere una contraseña';
 }
-if($password_hash_confirmation=='')
+if($password !== $password_confirmation)
 {
-  $errors[]='Se requiere confirmar la contraseña';
+  $errors[]='Las contraseñas no coinciden';
 }
+
+$password_hash= password_hash($password, PASSWORD_DEFAULT);
 
 if(empty($errors))
 {
 $conn=getDB();
-
+mysqli_report(MYSQLI_REPORT_OFF);
   $sql= "INSERT INTO registro (pic,serial_number,mascot_name,age,gender,sickness,
   address,phone_number,phone_number_extra,sterilized,name,email,password_hash)
   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -108,7 +102,18 @@ $conn=getDB();
   else
   {
 
-    mysqli_stmt_bind_param($stmt, "sssssssssssss", $pic, $serial_number, $mascot_name,
+    if($sickness=='')
+    {
+      $sickness = null;
+    }
+
+    if($phone_number_extra=='')
+    {
+      $phone_number_extra = null;
+    }
+
+
+    mysqli_stmt_bind_param($stmt, "ssssissssisss", $pic, $serial_number, $mascot_name,
     $age, $gender, $sickness, $address, $phone_number,
     $phone_number_extra, $sterilized, $name, $email, $password_hash);  
 if(mysqli_stmt_execute($stmt))
@@ -118,12 +123,13 @@ if(mysqli_stmt_execute($stmt))
 }
 else
 {
-  echo mysqli_stmt_error($stmt);
+  if ($conn->errno === 1062) {
+    $errors[]="Ya existe un registro con el e-mail, num. telefonico o num. de serie introducido";
+} else {
+    die($conn->error . " " . $conn->errno);
 }
-
-
-
-    
+  
+}
   }
  }
 }
@@ -196,9 +202,8 @@ else
 <div>
 <label for="gender">Genero</label>
           <select class="field" name="gender" id="gender">
-            <option disabled hidden selected></option>
-            <option>Macho</option>
-            <option>Hembra</option>
+            <option value="1">Macho</option>
+            <option value="2">Hembra</option>
           </select>
 </div>
 
@@ -246,9 +251,8 @@ else
 <div>
 <label for="sterilized">Su mascota se encuentra esterilizada?</label>
           <select class="field" name="sterilized" id="sterilized">
-            <option disabled hidden selected></option>
-            <option>Si</option>
-            <option>No</option>
+            <option value="1">Si</option>
+            <option value="2">No</option>
           </select>
 </div>
 
@@ -263,7 +267,7 @@ else
             placeholder="Nombre"
             name="name"
             id="name"
-            value=""<?= htmlspecialchars($name); ?>""          
+            value="<?= htmlspecialchars($name); ?>"          
           />
 </div>
 
@@ -280,26 +284,26 @@ else
 </div>
 
 <div>
-<label for="password_hash">Contraseña</label>
+<label for="password">Contraseña</label>
           <input
             type="password"
             class="field"
             placeholder="Contraseña"
-            name="password_hash"
-            id="password_hash"
-            value="<?= htmlspecialchars($password_hash); ?>"
+            name="password"
+            id="password"
+            value="<?= htmlspecialchars($password); ?>"
           />
 </div>
 
 <div>
-<label for="password_hash_confirmation">Confirmar contraseña</label>
+<label for="password_confirmation">Confirmar contraseña</label>
           <input
             type="password"
             class="field"
             placeholder="Confirma contraseña"
-            name="password_hash_confirmation"
-            id="password_hash_confirmation"
-            value="<?= htmlspecialchars($password_hash_confirmation); ?>"
+            name="password_confirmation"
+            id="password_confirmation"
+            value="<?= htmlspecialchars($password_confirmation); ?>"
             
           />
 </div>
