@@ -16,6 +16,7 @@ $conn=getDB();
       <div class="form-container">
         <form action="" method="post">
         <a href="registro.php">Registro</a>
+        <a href="menu-admin.php">Menu-admin</a>
           <h1>Inicio de sesion</h1>
           <input
             type="text"

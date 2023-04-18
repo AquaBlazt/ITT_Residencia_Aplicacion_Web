@@ -120,6 +120,16 @@ if(mysqli_stmt_execute($stmt))
 {
   $id = mysqli_insert_id($conn);
   echo "Se inserto la informacion con el ID: $id";
+if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')
+{
+  $protocol = 'https';
+}
+else
+{
+  $protocol = 'http';
+}
+  header("Location: $protocol://" . $_SERVER['HTTP_HOST'] . "/site/menu-admin.php?id=$id");
+  exit;
 }
 else
 {
@@ -156,6 +166,7 @@ else
       <div class="form-container">
         <form method="post">
         <a href="index.php">Inicio</a>
+        <a href="menu-admin.php">Menu-admin</a>
           <h2>Registro de la mascota</h2>
 <div>
 

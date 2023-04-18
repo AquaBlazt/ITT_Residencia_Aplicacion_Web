@@ -14,6 +14,8 @@ require '\residencia\includes\database.php';
     <div class="container">
       <div class="form-container">
         <form action="">
+        <a href="index.php">Inicio</a>
+        <a href="registro.php">Registro</a>
           <h1>Bienvenido Admin</h1>
           <button type="submit" class="form-btn">Registrar</button>
           <button type="submit" class="form-btn">Lista de mascotas</button>
