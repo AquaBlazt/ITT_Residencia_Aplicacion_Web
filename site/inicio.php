@@ -1,6 +1,32 @@
 <?php
 require '\residencia\includes\database.php';
 $conn=getDB();
+mysqli_report(MYSQLI_REPORT_OFF);
+
+$invalido = false;
+if( $_SERVER["REQUEST_METHOD"] === "POST")
+{
+$sql = sprintf("SELECT * FROM registro_usuario 
+WHERE email = '%s'",
+$conn->real_escape_string($_POST["email"]));
+
+$result = $conn->query($sql);
+$registro_usuario = $result->fetch_assoc();
+
+if($registro_usuario)
+{
+
+  if(password_verify($_POST["password"], $registro_usuario["password_hash"]))
+  {
+    die("inicio sesion correctamente");
+  }
+
+}
+
+$invalido = true;
+
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="esp">
@@ -15,21 +41,21 @@ $conn=getDB();
     <div class="container">
       <div class="form-container">
         <form action="" method="post">
-        <a href="registro.php">Registro</a>
-        <a href="menu-admin.php">Menu-admin</a>
-          <h1>Inicio de sesion</h1>
+          <h1>Inicio de Sesion</h1>
+          <?php if ($invalido): ?>
+            <em>Inicio de sesion invalido</em>
+            <?php endif; ?>
           <input
             type="text"
-            
-            placeholder="Usuario"
+            placeholder="E-mail"
             class="field"
             name="email"
             id="email"
+            value="<?= htmlspecialchars($_POST["email"] ?? "") ?>"
           />
 
           <input
             type="password"
-            
             placeholder="Contraseña"
             class="field"
             name="password"
@@ -40,6 +66,7 @@ $conn=getDB();
           </button>
           
         </form>
+        <a href="registro_usuario.php">¿No tienes cuenta? Registrate ahora</a>
       </div>
     </div>
   </body>
