@@ -26,6 +26,7 @@ if ($results === false) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="/css/style.css" rel="stylesheet" />
   <title>Lista de mascotas</title>
+  <a href="menu.php">Menu</a>
 </head>
 <body>
 <?php if (empty($registros_mascotas)): ?>

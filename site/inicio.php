@@ -18,7 +18,12 @@ if($registro_usuario)
 
   if(password_verify($_POST["password"], $registro_usuario["password_hash"]))
   {
-    die("inicio sesion correctamente");
+    session_start();
+    $_SESSION["user_id"] = $registro_usuario["id"];
+
+    session_regenerate_id();
+    header("Location: menu.php");
+    exit;
   }
 
 }
