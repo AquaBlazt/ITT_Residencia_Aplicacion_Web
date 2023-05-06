@@ -33,46 +33,14 @@ $invalido = true;
 }
 
 ?>
-<!DOCTYPE html>
-<html lang="esp">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="/css/style.css" rel="stylesheet" />
-    <title>Inicio</title>
+ <?php require '\residencia\includes\header.php'; ?>
+    <title>Inicio de Sesion</title>
   </head>
   <body>
     <div class="container">
       <div class="form-container">
-        <form action="" method="post">
-          <h1>Inicio de Sesion</h1>
-          <?php if ($invalido): ?>
-            <em>Inicio de sesion invalido</em>
-            <?php endif; ?>
-          <input
-            type="text"
-            placeholder="E-mail"
-            class="field"
-            name="email"
-            id="email"
-            value="<?= htmlspecialchars($_POST["email"] ?? "") ?>"
-          />
-
-          <input
-            type="password"
-            placeholder="Contraseña"
-            class="field"
-            name="password"
-          />
-
-          <button type="submit" class="form-btn" name="log-in">
-            Iniciar sesion
-          </button>
-          
-        </form>
+      <?php require '\residencia\includes\inicio_sesion.php'; ?>
         <a href="registro_usuario.php">¿No tienes cuenta? Registrate ahora</a>
       </div>
     </div>
-  </body>
-</html>
+    <?php require '\residencia\includes\footer.php'; ?>

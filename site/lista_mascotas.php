@@ -18,13 +18,7 @@ if ($results === false) {
 
 ?>
 
-<!DOCTYPE html>
-<html lang="esp">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="/css/style.css" rel="stylesheet" />
+<?php require '\residencia\includes\header.php'; ?>
   <title>Lista de mascotas</title>
   <a href="menu.php">Menu</a>
 </head>
@@ -45,5 +39,4 @@ if ($results === false) {
     </ul>
 
 <?php endif; ?>
-</body>
-</html>
+<?php require '\residencia\includes\footer.php'; ?>

@@ -1,5 +1,7 @@
 <?php
 
+/* Esta es la conexion a la base de datos */
+
 function getDB()
 {
 $db_host="localhost";
