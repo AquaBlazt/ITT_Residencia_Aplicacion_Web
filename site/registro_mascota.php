@@ -1,6 +1,7 @@
 <?php
 require '\residencia\includes\database.php';
 require '\residencia\includes\registro.php';
+require '\residencia\includes\url.php';
 
 $pic='';
 $serial_number='';
@@ -52,17 +53,8 @@ mysqli_report(MYSQLI_REPORT_OFF);
 if(mysqli_stmt_execute($stmt))
 {
   $id = mysqli_insert_id($conn);
-  echo "Se inserto la informacion con el ID: $id";
-if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')
-{
-  $protocol = 'https';
-}
-else
-{
-  $protocol = 'http';
-}
-  header("Location: $protocol://" . $_SERVER['HTTP_HOST'] . "/site/menu.php?id=$id");
-  exit;
+  redirect("/site/menu.php?id=$id");
+
 }
 else
 {
