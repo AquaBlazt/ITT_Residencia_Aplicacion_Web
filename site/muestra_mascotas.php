@@ -31,6 +31,9 @@ $registro_mascota = getRegistro($conn , $_GET['id']);
         <p><?= htmlspecialchars($registro_mascota['sickness']); ?></p>
         <p><?= htmlspecialchars($registro_mascota['sterilized']); ?></p>
     </article>
+    <a href="edicion_mascotas.php?id=<?= $registro_mascota['id']; ?>">Editar</a>
+    <a href="delete_mascotas.php?id=<?= $registro_mascota['id']; ?>">Eliminar</a>
+
 
 <?php endif; ?>
 <?php require '\residencia\includes\footer.php'; ?>

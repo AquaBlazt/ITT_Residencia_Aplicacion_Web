@@ -31,7 +31,7 @@ if ($results === false) {
         <?php foreach ($registros_mascotas as $registro): ?>
             <li>
                 <article>
-                    <h2><a href="edicion_mascotas.php?id=<?= $registro['id']; ?>"><?= htmlspecialchars($registro['serial_number']); ?></a></h2>
+                    <h2><a href="muestra_mascotas.php?id=<?= $registro['id']; ?>"><?= htmlspecialchars($registro['serial_number']); ?></a></h2>
                     <p><?= htmlspecialchars($registro['mascot_name']); ?></p>
                 </article>
             </li>

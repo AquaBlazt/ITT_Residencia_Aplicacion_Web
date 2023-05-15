@@ -11,6 +11,7 @@ $registro_mascota = getRegistro($conn , $_GET['id']);
 
 if($registro_mascota)
 {
+$id= $registro_mascota['id'];
 $pic= $registro_mascota['pic'];
 $serial_number=$registro_mascota['serial_number'];
 $mascot_name=$registro_mascota['mascot_name'];
@@ -33,7 +34,6 @@ else
 
 if($_SERVER["REQUEST_METHOD"]=="POST")
 {
-$id = $registro_mascota['id'];
 $pic = $_POST['pic'];
 $serial_number= $_POST['serial_number'];
 $mascot_name= $_POST['mascot_name'];
@@ -58,10 +58,8 @@ if(empty($errors))
                gender= ?,
                sickness= ?,
                sterilized= ?
-          WHERE id=?";
+          WHERE id= ?";
     
-  
-        
     $stmt= mysqli_prepare($conn, $sql);
     
     if($stmt===false)
@@ -70,13 +68,11 @@ if(empty($errors))
     }
     else
     {
-
-      
-  
       if($sickness=='')
       {
         $sickness = null;
       }
+     
   
       mysqli_stmt_bind_param($stmt, "iisissii", $pic, $serial_number, $mascot_name,
       $age, $gender, $sickness, $sterilized, $id);  
