@@ -1,9 +1,17 @@
 <?php
-/* En este archivo estaran todas las funciones relacionadas a registrar informacion en la BD */
+/** 
+*Obtener el ID de las mascotas
+*
+*@param objeto $conn representa la conexion a la base de datos 
+*@param el valor entero $id representa el ID del registro
+*@return arreglo asociativo el cual contiene el ID del registro, de ser el caso sera nulo
+*
+*
+*/
 
-function getRegistro($conn, $id)
+function getRegistro($conn, $id, $columns = '*')
 {
-$sql = "SELECT *
+$sql = "SELECT $columns
         FROM registro_mascota
         WHERE id= ?";
 $stmt = mysqli_prepare($conn, $sql);

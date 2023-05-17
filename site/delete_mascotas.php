@@ -7,18 +7,12 @@ mysqli_report(MYSQLI_REPORT_OFF);
 
 if (isset($_GET['id'])) {
 
-$registro_mascota = getRegistro($conn , $_GET['id']);
+$registro_mascota = getRegistro($conn , $_GET['id'], 'id');
 
 if($registro_mascota)
 {
 $id = $registro_mascota['id'];
-$pic= $registro_mascota['pic'];
-$serial_number=$registro_mascota['serial_number'];
-$mascot_name=$registro_mascota['mascot_name'];
-$age=$registro_mascota['age'];
-$gender=$registro_mascota['gender'];
-$sickness=$registro_mascota['sickness'];
-$sterilized=$registro_mascota['sterilized'];
+
 }
 
 else
@@ -31,7 +25,9 @@ else
 {
  die("ID invalido, la informacion no se encontro");
 }
-mysqli_report(MYSQLI_REPORT_OFF);
+
+if ($_SERVER["REQUEST_METHOD"] == "POST")
+{
 $sql= "DELETE FROM registro_mascota       
       WHERE id= ? ";
  
@@ -59,6 +55,16 @@ if ($conn->errno === 1062) {
   die($conn->error . " " . $conn->errno);
 }
 
+    }
+  }
 }
-}
+
 ?>
+<?php require '\residencia\includes\header.php'; ?>
+
+<h2> ¿Desea eliminar la informacion? </h2>
+<form method="post">
+  <p>¿Estas seguro en eliminar la informacion? </p>
+    <button>Eliminar</button>
+    <a href="muestra_mascotas.php?id=<?= $registro_mascota['id']; ?>">Cancelar</a>
+<?php require '\residencia\includes\header.php'; ?>

@@ -33,7 +33,7 @@ $registro_mascota = getRegistro($conn , $_GET['id']);
     </article>
     <a href="edicion_mascotas.php?id=<?= $registro_mascota['id']; ?>">Editar</a>
     <a href="delete_mascotas.php?id=<?= $registro_mascota['id']; ?>">Eliminar</a>
-
-
+    <a href="lista_mascotas.php">Lista de Mascotas</a>
+   
 <?php endif; ?>
 <?php require '\residencia\includes\footer.php'; ?>
