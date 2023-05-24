@@ -1,5 +1,5 @@
 <?php
-require '\residencia\includes\url.php';
+require '\residencia\classes\Url.php';
 require '\residencia\classes\ListaUsers.php';
 require '\residencia\classes\Database.php';
 
@@ -13,7 +13,7 @@ if (ListaUsers::authenticate($conn, $_POST['email'], $_POST['password']))
 {
   session_regenerate_id(true);
   $_SESSION['is_logged_in'] = true;
-  redirect('/site/menu.php');
+  Url::redirect('/site/menu.php');
 }
 else
 {

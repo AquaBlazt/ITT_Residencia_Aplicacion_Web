@@ -5,7 +5,9 @@
 *Esta funcion permite la redireccion a cualquier otra ventana del programa 
 *
 */
-function redirect($path)
+class Url
+{
+public static function redirect($path)
 {
   if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')
   {
@@ -18,5 +20,5 @@ function redirect($path)
   header("Location: $protocol://" . $_SERVER['HTTP_HOST'] . $path);
   exit;
   }
-
+}
 ?>

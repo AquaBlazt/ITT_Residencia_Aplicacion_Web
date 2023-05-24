@@ -1,7 +1,7 @@
 <?php
 require '\residencia\classes\Database.php';
 require '\residencia\classes\ListaMascotas.php';
-require '\residencia\includes\auth.php';
+require '\residencia\classes\Auth.php';
 session_start();
 $db = new Database();
 $conn= $db->getConn();
@@ -21,7 +21,7 @@ $registro_mascota = ListaMascotas::getByID($conn, $_GET['id']);
 ?>
 
 <?php require '\residencia\includes\header.php'; ?>
-<?php if (isLoggedIn()): ?>
+<?php if (Auth::isLoggedIn()): ?>
   <p>Estas conectado. <a href="logout.php">Cerrar Sesion</a></p>
   <title>Muestra de las mascotas registradas</title>
 </head>

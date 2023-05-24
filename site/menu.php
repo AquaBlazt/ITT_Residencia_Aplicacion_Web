@@ -1,6 +1,6 @@
 <?php
 require '\residencia\classes\Database.php';
-require '\residencia\includes\auth.php';
+require '\residencia\classes\Auth.php';
 
 session_start();
 
@@ -15,7 +15,7 @@ mysqli_report(MYSQLI_REPORT_OFF);
 <?php require '\residencia\includes\header.php'; ?>
 
 
-<?php if (isLoggedIn()): ?>
+<?php if (Auth::isLoggedIn()): ?>
   <p>Estas conectado. <a href="logout.php">Cerrar Sesion</a></p>
   <h1>Bienvenido</h1>
   <p><a href="registro_mascota.php">Registro</a></p>         

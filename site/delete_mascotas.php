@@ -1,9 +1,15 @@
 <?php
 require '\residencia\classes\Database.php';
 require '\residencia\classes\ListaMascotas.php';
-require '\residencia\includes\url.php';
-require '\residencia\includes\auth.php';
+require '\residencia\classes\Url.php';
+require '\residencia\classes\Auth.php';
 
+session_start();
+if (! Auth::isLoggedIn()) {
+
+  Url::redirect("/site/offline.php?id=$id");
+
+}
 
 $db = new Database();
 $conn= $db->getConn();
@@ -27,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
 if ($ListaMascota->delete($conn))
 {
-redirect("/site/lista_mascotas.php?id=$id");
+  Url::redirect("/site/lista_mascotas.php?id=$id");
 }
 
 }

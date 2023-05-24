@@ -1,8 +1,8 @@
 <?php
 require '\residencia\classes\Database.php';
 require '\residencia\classes\ListaMascotas.php';
-require '\residencia\includes\url.php';
-require '\residencia\includes\auth.php';
+require '\residencia\classes\Url.php';
+require '\residencia\classes\Auth.php';
 
 session_start();
 
@@ -24,14 +24,14 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
   if($ListaMascota->create($conn))
     {
     
-    redirect("/site/lista_mascotas.php?id={$ListaMascota->id}");
+      Url::redirect("/site/lista_mascotas.php?id={$ListaMascota->id}");
     }
 }
 
 ?>
  <?php require '\residencia\includes\header.php'; ?>
  <?php require '\residencia\includes\header.php'; ?>
-<?php if (isLoggedIn()): ?>
+<?php if (Auth::isLoggedIn()): ?>
     <a href="menu.php">Menu</a>
     <title>Registro de la Mascota</title>
 <?php require '\residencia\includes\registro_formulario_mascota.php'; ?>

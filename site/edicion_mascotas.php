@@ -1,15 +1,21 @@
 <?php
 require '\residencia\classes\Database.php';
 require '\residencia\classes\ListaMascotas.php';
-require '\residencia\includes\url.php';
+require '\residencia\classes\Url.php';
+require '\residencia\classes\Auth.php';
 
+session_start();
+if (! Auth::isLoggedIn()) {
 
+  Url::redirect("/site/offline.php?id=$id");
+
+}
 $db = new Database();
-$conn= $db->getConn();
+$conn = $db->getConn();
 mysqli_report(MYSQLI_REPORT_OFF);
 
 if (isset($_GET['id'])) {
-
+  
 $ListaMascota = ListaMascotas::getByID($conn , $_GET['id']);
 
 if(! $ListaMascota)
@@ -24,6 +30,7 @@ if(! $ListaMascota)
 
 if($_SERVER["REQUEST_METHOD"]=="POST")
 {
+  
   $ListaMascota->pic = $_POST['pic'];
   $ListaMascota->serial_number = $_POST['serial_number'];
   $ListaMascota->mascot_name = $_POST['mascot_name'];
@@ -35,7 +42,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
   if($ListaMascota->update($conn))
     {
     
-    redirect("/site/lista_mascotas.php?id={$ListaMascota->id}");
+      Url::redirect("/site/lista_mascotas.php?id={$ListaMascota->id}");
     }
 }
 
@@ -43,6 +50,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 ?>
 
 <?php require '\residencia\includes\header.php'; ?>
+
 <title>Edicion de la Mascota</title>
 <a href="menu.php">Menu</a>
 <a href="lista_mascotas.php">Lista</a>

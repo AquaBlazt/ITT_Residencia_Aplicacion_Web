@@ -1,7 +1,7 @@
 <?php
 require '\residencia\classes\Database.php';
 require '\residencia\classes\ListaUsers.php';
-require '\residencia\includes\url.php';
+require '\residencia\classes\Url.php';
 
 
 
@@ -29,7 +29,7 @@ $conn = $db->getConn();
   if($ListaUser->create($conn))
     {
     
-    redirect("/site/login.php?id={$ListaUser->id}");
+    Url::redirect("/site/login.php?id={$ListaUser->id}");
     }
 }
 

@@ -1,5 +1,5 @@
 <?php 
-require '\residencia\includes\url.php';
+require '\residencia\classes\Url.php';
 session_start();
 $_SESSION = array();
 if(ini_get("session.use_cookies"))
@@ -11,6 +11,6 @@ if(ini_get("session.use_cookies"))
 }
 
 session_destroy();
-redirect('/site/menu.php');
+Url::redirect('/site/login.php');
 
 ?>
