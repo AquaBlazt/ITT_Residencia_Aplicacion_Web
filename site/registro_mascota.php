@@ -6,11 +6,6 @@ require '\residencia\includes\auth.php';
 
 session_start();
 
-if(! isLoggedIn())
-{
-  die("No autorizado");
-}
-
 $ListaMascota = new ListaMascotas();
 
 if($_SERVER["REQUEST_METHOD"]=="POST")
@@ -35,7 +30,13 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 
 ?>
  <?php require '\residencia\includes\header.php'; ?>
+ <?php require '\residencia\includes\header.php'; ?>
+<?php if (isLoggedIn()): ?>
     <a href="menu.php">Menu</a>
     <title>Registro de la Mascota</title>
 <?php require '\residencia\includes\registro_formulario_mascota.php'; ?>
+<?php else: ?>
+ <p>Estas desconectado. <a href="login.php">Inicia Sesión</a></p>
+ <p>Si no tienes cuenta, <a href ="registro_user.php">registrate aqui</a></p>
+<?php endif; ?>
     <?php require '\residencia\includes\footer.php'; ?>
