@@ -1,16 +1,16 @@
-
-<?php if (! empty($errors)): ?>
-
+<?php if (! empty($ListaMascota->errors)): ?>
+ 
       <ul>
-        <?php foreach ($errors as $error): ?>
+        <?php foreach ($ListaMascota->errors as $error): ?>
           <li><?= $error ?></li>
         <?php endforeach; ?>
       </ul>
  <?php endif; ?>
   </head>
   <body>
+  <h2>Formulario de la Mascota</h2>
         <form method="post">   
-          <h2>Formulario de la Mascota</h2>
+          
 <div>
 
           <label for="pic">Foto</label>
@@ -25,7 +25,7 @@
             placeholder="Num. serie"
             name="serial_number"  
             id="serial_number" 
-            value="<?= htmlspecialchars($serial_number); ?>"
+            value="<?= htmlspecialchars($ListaMascota->serial_number); ?>"
           />
 </div>
 
@@ -37,7 +37,7 @@
             placeholder="Nombre"
             name="mascot_name"
             id="mascot_name"
-            value="<?= htmlspecialchars($mascot_name); ?>"
+            value="<?= htmlspecialchars($ListaMascota->mascot_name); ?>"
           />
 </div>
 
@@ -49,7 +49,7 @@
             placeholder="Edad"
             name="age"
             id="age"   
-            value="<?= htmlspecialchars($age); ?>"        
+            value="<?= htmlspecialchars($ListaMascota->age); ?>"        
           />
 </div>
 
@@ -64,7 +64,7 @@
 
 <div>
 <label for="sickness">Enfermedad</label>
-        <textarea name="sickness" id="sickness" cols="40" rows="12" placeholder="Describala"><?= htmlspecialchars($sickness); ?></textarea>
+        <textarea name="sickness" id="sickness" cols="40" rows="12" placeholder="Describala"><?= htmlspecialchars($ListaMascota->sickness); ?></textarea>
 </div>
 
 <div>

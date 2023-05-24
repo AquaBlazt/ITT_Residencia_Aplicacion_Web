@@ -1,43 +1,33 @@
 <?php
+require '\residencia\classes\Database.php';
+require '\residencia\includes\auth.php';
+
 session_start();
-require '\residencia\includes\database.php';
-$conn=getDB();
+
+$db = new Database();
+$conn = $db->getConn();
+
 mysqli_report(MYSQLI_REPORT_OFF);
-
-if(isset($_SESSION["user_id"]))
-{
-  $sql = "SELECT * FROM registro_usuario
-          WHERE id = {$_SESSION["user_id"]}";
-
-          $result = $conn->query($sql);
-
-          $user =  $result->fetch_assoc();
-
-
-}
-
-
 
 ?>
 
 
 <?php require '\residencia\includes\header.php'; ?>
+
+
+<?php if (isLoggedIn()): ?>
+  <p>Estas conectado. <a href="logout.php">Cerrar Sesion</a></p>
+  <h1>Bienvenido</h1>
+  <p><a href="registro_mascota.php">Registro</a></p>         
+    <p><a href="lista_mascotas.php">Lista de Mascotas</a></p>
+  <?php else: ?>
+ 
+    <p>Estas desconectado. <a href="login.php">Inicia Sesión</a></p>
+    <p>Si no tienes cuenta, <a href ="registro_user.php">registrate aqui</a></p>
+
+  <?php endif; ?>
+
     <title>Menu</title>
   </head>
   <body>
-  <h1>Menu</h1>
-
-<?php if (isset($user)): ?>
-
-<p> Bienvenido <?= htmlspecialchars($user["name"]) ?></p>
-        <a href="registro_mascota.php">Registro</a>          
-        <a href="lista_mascotas.php">Lista de Mascotas</a>
-        <a href="salir.php">Cerrar Sesion</a> 
-
-      <?php else: ?>
-       <p> Debes de Iniciar Sesion</p>
-        <a href="inicio.php">Inicia sesion</a> <p> O si no estas registrado, crea tu cuenta ahora </p> <a href="registro_usuario.php"> Registrate </a>
-
-
-        <?php endif; ?>
         <?php require '\residencia\includes\footer.php'; ?>

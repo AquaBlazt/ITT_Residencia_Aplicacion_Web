@@ -1,4 +1,10 @@
 <?php
+/** 
+*Redireccionar a otra ventana
+*
+*Esta funcion permite la redireccion a cualquier otra ventana del programa 
+*
+*/
 function redirect($path)
 {
   if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')

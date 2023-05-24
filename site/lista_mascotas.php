@@ -1,24 +1,21 @@
 <?php
+require '\residencia\classes\Database.php';
+require '\residencia\classes\ListaMascotas.php';
+require '\residencia\includes\auth.php';
 
-require '\residencia\includes\database.php';
-$conn=getDB();
+session_start();
+
+$db = new Database();
+$conn = $db->getConn();
+
 mysqli_report(MYSQLI_REPORT_OFF);
 
-$sql = "SELECT *
-        FROM registro_mascota
-        ORDER BY serial_number;";
-
-$results = mysqli_query($conn, $sql);
-
-if ($results === false) {
-    echo mysqli_error($conn);
-} else {
-    $registros_mascotas = mysqli_fetch_all($results, MYSQLI_ASSOC);
-}
-
+$registros_mascotas = ListaMascotas::getAll($conn);
 ?>
 
 <?php require '\residencia\includes\header.php'; ?>
+<?php if (isLoggedIn()): ?>
+  <p>Estas conectado. <a href="logout.php">Cerrar Sesion</a></p>
   <title>Lista de mascotas</title>
   <a href="menu.php">Menu</a>
 </head>
@@ -37,6 +34,12 @@ if ($results === false) {
             </li>
         <?php endforeach; ?>
     </ul>
+
+<?php endif; ?>
+<?php else: ?>
+ 
+ <p>Estas desconectado. <a href="login.php">Inicia Sesión</a></p>
+ <p>Si no tienes cuenta, <a href ="registro_user.php">registrate aqui</a></p>
 
 <?php endif; ?>
 <?php require '\residencia\includes\footer.php'; ?>

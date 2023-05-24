@@ -1,72 +1,36 @@
 <?php
-require '\residencia\includes\database.php';
-require '\residencia\includes\registro.php';
+require '\residencia\classes\Database.php';
+require '\residencia\classes\ListaMascotas.php';
 require '\residencia\includes\url.php';
+require '\residencia\includes\auth.php';
 
-$pic='';
-$serial_number='';
-$mascot_name='';
-$age='';
-$gender='';
-$sickness='';
-$sterilized='';
+session_start();
 
+if(! isLoggedIn())
+{
+  die("No autorizado");
+}
+
+$ListaMascota = new ListaMascotas();
 
 if($_SERVER["REQUEST_METHOD"]=="POST")
 {
-$pic = $_POST['pic'];
-$serial_number= $_POST['serial_number'];
-$mascot_name= $_POST['mascot_name'];
-$age= $_POST['age'];
-$gender= filter_input(INPUT_POST, 'gender', FILTER_VALIDATE_INT);
-$sickness= $_POST['sickness'];
-$sterilized= filter_input(INPUT_POST, 'sterilized', FILTER_VALIDATE_INT);
-
-
-$errors = validateRegistro($pic, $serial_number, $mascot_name, $age, $gender, $sickness, $sterilized);
-
-
-if(empty($errors))
-{
-$conn=getDB();
-mysqli_report(MYSQLI_REPORT_OFF);
-  $sql= "INSERT INTO registro_mascota (pic,serial_number,mascot_name,age,gender,sickness,sterilized)
-  VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-      
-  $stmt= mysqli_prepare($conn, $sql);
+  $db = new Database();
+  $conn = $db->getConn();
   
-  if($stmt===false)
-  {
-    echo mysqli_error($conn);
-  }
-  else
-  {
-
-    if($sickness=='')
+  $ListaMascota->pic = $_POST['pic'];
+  $ListaMascota->serial_number = $_POST['serial_number'];
+  $ListaMascota->mascot_name = $_POST['mascot_name'];
+  $ListaMascota->age = $_POST['age'];
+  $ListaMascota->gender = filter_input(INPUT_POST, 'gender', FILTER_VALIDATE_INT);
+  $ListaMascota->sickness = $_POST['sickness'];
+  $ListaMascota->sterilized = filter_input(INPUT_POST, 'sterilized', FILTER_VALIDATE_INT);
+ 
+  if($ListaMascota->create($conn))
     {
-      $sickness = null;
+    
+    redirect("/site/lista_mascotas.php?id={$ListaMascota->id}");
     }
-
-    mysqli_stmt_bind_param($stmt, "iisissi", $pic, $serial_number, $mascot_name,
-    $age, $gender, $sickness, $sterilized);  
-if(mysqli_stmt_execute($stmt))
-{
-  $id = mysqli_insert_id($conn);
-  redirect("/site/menu.php?id=$id");
-
-}
-else
-{
-  if ($conn->errno === 1062) {
-    $errors[]="Ya existe un registro con el num. de serie introducido";
-} else {
-    die($conn->error . " " . $conn->errno);
-}
-  
-}
-  }
- }
 }
 
 ?>
