@@ -1,7 +1,6 @@
 <?php
 require '\residencia\includes\init.php';
 
-
 Auth::requireLogin();
 $conn = require '\residencia\includes\db.php';
 
@@ -45,7 +44,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 <?php require '\residencia\includes\header.php'; ?>
 
 <title>Edicion de la Mascota</title>
-<a href="lista_mascotas.php">Lista</a>
+<a href="lista_mascotas.php">Lista de Mascotas</a>
 <h1>Editar</h1>
 <?php require '\residencia\includes\registro_formulario_mascota.php'; ?>
 <?php require '\residencia\includes\footer.php'; ?>

@@ -14,8 +14,9 @@ Url::redirect('/admin/lista_mascotas.php');
 }
 elseif (ListaUsers::authenticate($conn, $_POST['email'], $_POST['password']))
 {
+  
   Auth::login();
-  Url::redirect('/muestra_mascotas.php');
+  Url::redirect('/lista_mascotas.php');
 }
 
 else

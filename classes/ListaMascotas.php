@@ -130,6 +130,9 @@ if (empty($this->id) && $this->serialNumberExists($this->serial_number))
 return empty($this->errors);
 }
 
+
+
+
 protected function serialNumberExists($serial_number)
 {
  
@@ -160,6 +163,8 @@ public function delete($conn)
 
 return $stmt->execute();
 }
+
+
 
 
 

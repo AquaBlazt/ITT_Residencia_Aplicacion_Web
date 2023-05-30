@@ -1,6 +1,6 @@
 <?php
 require '\residencia\includes\init.php';
-
+Auth::requireLogin();
 
 
 $ListaMascota = new ListaMascotas();
@@ -21,19 +21,14 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
   if($ListaMascota->create($conn))
     {
     
-      Url::redirect("/muestra_mascotas.php?id={$ListaMascota->id}");
+      Url::redirect("/lista_mascotas.php?id={$ListaMascota->id}");
     }
 }
 
 ?>
  <?php require '\residencia\includes\header.php'; ?>
  <?php require '\residencia\includes\header.php'; ?>
-<?php if (Auth::isLoggedIn()): ?>
-  <a href="">Mis mascotas</a>
+  <a href="lista_mascotas.php">Mis mascotas</a>
     <title>Registro de la Mascota</title>
 <?php require '\residencia\includes\registro_formulario_mascota.php'; ?>
-<?php else: ?>
- <p>Estas desconectado. <a href="login.php">Inicia Sesión</a></p>
- <p>Si no tienes cuenta, <a href ="registro_user.php">registrate aqui</a></p>
-<?php endif; ?>
     <?php require '\residencia\includes\footer.php'; ?>

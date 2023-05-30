@@ -162,5 +162,6 @@ public static function authenticateAdmin($conn, $email, $password)
             }  
 
  }
+
 }
 

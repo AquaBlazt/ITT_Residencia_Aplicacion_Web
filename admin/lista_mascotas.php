@@ -1,5 +1,6 @@
 <?php
 require '\residencia\includes\init.php';
+Auth::requireLogin();
 $conn = require '\residencia\includes\db.php';
 
 
@@ -10,7 +11,7 @@ $registros_mascotas = ListaMascotas::getAll($conn);
 
 <?php require '\residencia\includes\header.php'; ?>
 <?php if (Auth::isLoggedIn()): ?>
-  <p>Estas conectado. <a href="/logout.php">Cerrar Sesion</a></p>
+  <p>Estas conectado. <a href="logout.php">Cerrar Sesion</a></p>
   <h2>Administracion</h2>
   <title>Lista de mascotas</title>
   <p><a href="registro_mascota.php">Registro</a></p>  
@@ -34,12 +35,11 @@ $registros_mascotas = ListaMascotas::getAll($conn);
         <?php endforeach; ?>
         </tbody>
     </table>
-
 <?php endif; ?>
 <?php else: ?>
  
- <p>Estas desconectado. <a href="/login.php">Inicia Sesión</a></p>
- <p>Si no tienes cuenta, <a href ="/registro_user.php">registrate aqui</a></p>
+ <p>Estas desconectado. <a href="login.php">Inicia Sesión</a></p>
+ <p>Si no tienes cuenta, <a href ="registro_user.php">registrate aqui</a></p>
 
 <?php endif; ?>
 <?php require '\residencia\includes\footer.php'; ?>

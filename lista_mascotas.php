@@ -1,5 +1,6 @@
 <?php
 require '\residencia\includes\init.php';
+Auth::requireLogin();
 $conn = require '\residencia\includes\db.php';
 
 
@@ -12,6 +13,7 @@ $registros_mascotas = ListaMascotas::getAll($conn);
 <?php if (Auth::isLoggedIn()): ?>
   <p>Estas conectado. <a href="logout.php">Cerrar Sesion</a></p>
   <h2>Bienvenido</h2>
+  <p><a href="registro_mascota.php">Registro</a></p>  
   <title>Lista de mascotas</title>
 </head>
 <body>
