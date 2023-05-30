@@ -1,17 +1,10 @@
 <?php
-require '\residencia\classes\Database.php';
-require '\residencia\classes\ListaMascotas.php';
-require '\residencia\classes\Url.php';
-require '\residencia\classes\Auth.php';
+require '\residencia\includes\init.php';
 
-session_start();
-if (! Auth::isLoggedIn()) {
 
-  Url::redirect("/site/offline.php?id=$id");
+Auth::requireLogin();
+$conn = require '\residencia\includes\db.php';
 
-}
-$db = new Database();
-$conn = $db->getConn();
 mysqli_report(MYSQLI_REPORT_OFF);
 
 if (isset($_GET['id'])) {
@@ -42,7 +35,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
   if($ListaMascota->update($conn))
     {
     
-      Url::redirect("/site/lista_mascotas.php?id={$ListaMascota->id}");
+      Url::redirect("/admin/lista_mascotas.php?id={$ListaMascota->id}");
     }
 }
 
@@ -52,7 +45,6 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 <?php require '\residencia\includes\header.php'; ?>
 
 <title>Edicion de la Mascota</title>
-<a href="menu.php">Menu</a>
 <a href="lista_mascotas.php">Lista</a>
 <h1>Editar</h1>
 <?php require '\residencia\includes\registro_formulario_mascota.php'; ?>

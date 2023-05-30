@@ -2,7 +2,7 @@
 
 class Database
 {
-  public function getConn()
+  public static function getConn()
   {
     $db_host="localhost";
     $db_name="mascotas";

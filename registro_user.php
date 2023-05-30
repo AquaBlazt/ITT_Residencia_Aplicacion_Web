@@ -1,8 +1,5 @@
 <?php
-require '\residencia\classes\Database.php';
-require '\residencia\classes\ListaUsers.php';
-require '\residencia\classes\Url.php';
-
+require '\residencia\includes\init.php';
 
 
 
@@ -10,8 +7,8 @@ $ListaUser = new ListaUsers();
 
 if($_SERVER["REQUEST_METHOD"]=="POST")
 {
-$db = new Database();
-$conn = $db->getConn();
+
+$conn = require '\residencia\includes\db.php';
 
 
   $ListaUser->name = $_POST['name'];
@@ -29,7 +26,7 @@ $conn = $db->getConn();
   if($ListaUser->create($conn))
     {
     
-    Url::redirect("/site/login.php?id={$ListaUser->id}");
+    Url::redirect("/login.php?id={$ListaUser->id}");
     }
 }
 

@@ -1,10 +1,8 @@
 <?php
-require '\residencia\classes\Database.php';
-require '\residencia\classes\ListaMascotas.php';
-require '\residencia\classes\Auth.php';
-session_start();
-$db = new Database();
-$conn= $db->getConn();
+require '\residencia\includes\init.php';
+
+$conn = require '\residencia\includes\db.php';
+
 mysqli_report(MYSQLI_REPORT_OFF);
 
 if (isset($_GET['id'])) 

@@ -3,6 +3,7 @@
 class ListaUsers
 {
   public $id;
+  public $type;
   public $name;
   public $email;
   public $password;
@@ -12,8 +13,6 @@ class ListaUsers
   public $phone_number;
   public $phone_number_extra;
   public $errors= [];
-
-
 
 protected function validate()
 {
@@ -52,10 +51,27 @@ if($this->phone_number == $this->phone_number_extra)
   $this->errors[]='No puedes introducir los mismos numeros telefonicos';
 }
 
-
-
-    
+if ($this->emailExists($this->email))
+{
+  $this->errors[]='Ya existe un registro con ese email';
+}
+  
 return empty($this->errors);
+
+}
+
+protected function emailExists($email)
+{
+ 
+  $sql = "SELECT *
+  FROM registro_usuario
+  WHERE email = :email";
+$db = Database::getConn();
+$stmt = $db->prepare($sql);
+$stmt->bindValue(':email', $email, PDO::PARAM_STR);
+
+$stmt->execute();
+return $stmt->fetch() !== false;
 
 }
 
@@ -82,8 +98,6 @@ public function create($conn)
           $stmt->bindValue(':phone_number', $this->phone_number, PDO::PARAM_STR);
           $stmt->bindValue(':phone_number_extra', $this->phone_number_extra, PDO::PARAM_STR);
           
-          
-
           if ($this->phone_number_extra == '') 
           {
             $stmt->bindValue(':phone_number_extra', null, PDO::PARAM_NULL);
@@ -92,8 +106,7 @@ public function create($conn)
           {
             $stmt->bindValue(':phone_number_extra', $this->phone_number_extra, PDO::PARAM_STR);
           }  
-                   
-
+        
           if ($stmt->execute()) 
           {
             $this->id = $conn->lastInsertId();
@@ -105,6 +118,10 @@ public function create($conn)
     return false;
   }
 }
+
+
+
+
 
 public static function authenticate($conn, $email, $password)
   {
@@ -126,4 +143,24 @@ public static function authenticate($conn, $email, $password)
     }  
   }
 
+  
+public static function authenticateAdmin($conn, $email, $password)
+ {
+ 
+  $sql = "SELECT * 
+            FROM registro_usuario 
+            WHERE type = 'admin' AND email = :email";           
+            $stmt = $conn->prepare($sql);
+
+            $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'ListaUsers');
+            $stmt->execute();
+            if ($user = $stmt->fetch())
+            {
+        
+              return password_verify($password, $user->password);   
+            }  
+
+ }
 }
+

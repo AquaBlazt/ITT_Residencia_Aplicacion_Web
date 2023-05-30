@@ -1,18 +1,11 @@
 <?php
-require '\residencia\classes\Database.php';
-require '\residencia\classes\ListaMascotas.php';
-require '\residencia\classes\Url.php';
-require '\residencia\classes\Auth.php';
+require '\residencia\includes\init.php';
 
-session_start();
-if (! Auth::isLoggedIn()) {
 
-  Url::redirect("/site/offline.php?id=$id");
+Auth::requireLogin();
 
-}
+$conn = require '\residencia\includes\db.php';
 
-$db = new Database();
-$conn= $db->getConn();
 mysqli_report(MYSQLI_REPORT_OFF);
 
 if (isset($_GET['id'])) {
@@ -33,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
 if ($ListaMascota->delete($conn))
 {
-  Url::redirect("/site/lista_mascotas.php?id=$id");
+  Url::redirect("/admin/lista_mascotas.php?id=$id");
 }
 
 }
@@ -46,6 +39,6 @@ if ($ListaMascota->delete($conn))
 <form method="post">
   <p>¿Estas seguro en eliminar la informacion? </p>
     <button>Eliminar</button>
-    <a href="muestra_mascotas.php?id=<?= $ListaMascota->id; ?>">Cancel</a>
+    <a href="/admin/muestra_mascotas.php?id=<?= $ListaMascota->id; ?>">Cancel</a>
 </form>
 <?php require '\residencia\includes\header.php'; ?>

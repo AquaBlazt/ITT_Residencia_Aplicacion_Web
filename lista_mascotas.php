@@ -1,12 +1,7 @@
 <?php
-require '\residencia\classes\Database.php';
-require '\residencia\classes\ListaMascotas.php';
-require '\residencia\classes\Auth.php';
+require '\residencia\includes\init.php';
+$conn = require '\residencia\includes\db.php';
 
-session_start();
-
-$db = new Database();
-$conn = $db->getConn();
 
 mysqli_report(MYSQLI_REPORT_OFF);
 
@@ -16,8 +11,8 @@ $registros_mascotas = ListaMascotas::getAll($conn);
 <?php require '\residencia\includes\header.php'; ?>
 <?php if (Auth::isLoggedIn()): ?>
   <p>Estas conectado. <a href="logout.php">Cerrar Sesion</a></p>
+  <h2>Bienvenido</h2>
   <title>Lista de mascotas</title>
-  <a href="menu.php">Menu</a>
 </head>
 <body>
 <?php if (empty($registros_mascotas)): ?>

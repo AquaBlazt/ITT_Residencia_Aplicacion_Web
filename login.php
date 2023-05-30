@@ -1,20 +1,23 @@
 <?php
-require '\residencia\classes\Url.php';
-require '\residencia\classes\ListaUsers.php';
-require '\residencia\classes\Database.php';
+require '\residencia\includes\init.php';
 
-session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
-$db = new Database();
-$conn = $db->getConn();
+  $conn = require '\residencia\includes\db.php';
 
-if (ListaUsers::authenticate($conn, $_POST['email'], $_POST['password']))
+
+
+if(ListaUsers::authenticateAdmin($conn, $_POST['email'], $_POST['password']))
 {
-  session_regenerate_id(true);
-  $_SESSION['is_logged_in'] = true;
-  Url::redirect('/site/menu.php');
+Auth::login();
+Url::redirect('/admin/lista_mascotas.php');
 }
+elseif (ListaUsers::authenticate($conn, $_POST['email'], $_POST['password']))
+{
+  Auth::login();
+  Url::redirect('/muestra_mascotas.php');
+}
+
 else
 {
   $error = "Error al Iniciar Sesion";

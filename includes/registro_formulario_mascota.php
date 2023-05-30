@@ -55,7 +55,7 @@
 
 <div>
 <label for="gender">Genero</label>
-          <select class="field" name="gender" id="gender">
+          <select class="field" name="gender" id="gender" value="<?= htmlspecialchars($ListaMascota->gender); ?>">
             <option value="">--Elige una opcion--</option>
             <option value="1">Macho</option>
             <option value="2">Hembra</option>
@@ -69,7 +69,7 @@
 
 <div>
 <label for="sterilized">Su mascota se encuentra esterilizada?</label>
-          <select class="field" name="sterilized" id="sterilized">
+          <select class="field" name="sterilized" id="sterilized" value="<?= htmlspecialchars($ListaMascota->sterilized); ?>">>
           <option value="">--Elige una opcion--</option>
             <option value="1">Si</option>
             <option value="2">No</option>

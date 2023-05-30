@@ -85,6 +85,8 @@ public function update($conn)
             $stmt->bindValue(':sickness', $this->sickness, PDO::PARAM_STR);
           }     
 
+         
+
         return $stmt->execute();
   }
   else
@@ -120,9 +122,31 @@ if($this->sterilized=='')
   $this->errors[]='Se requiere saber si la mascota esta esterilizada';
 }
 
+if (empty($this->id) && $this->serialNumberExists($this->serial_number))
+{
+  $this->errors[]='Ya existe un registro con ese Num. de Serie';
+}
 
 return empty($this->errors);
 }
+
+protected function serialNumberExists($serial_number)
+{
+ 
+  $sql = "SELECT *
+  FROM registro_mascota
+  WHERE serial_number = :serial_number";
+$db = Database::getConn();
+$stmt = $db->prepare($sql);
+$stmt->bindValue(':serial_number', $serial_number, PDO::PARAM_INT);
+
+
+$stmt->execute();
+return $stmt->fetch() !== false;
+
+}
+
+
 
 public function delete($conn)
 {
@@ -136,6 +160,7 @@ public function delete($conn)
 
 return $stmt->execute();
 }
+
 
 
 public function create($conn)
@@ -172,6 +197,7 @@ public function create($conn)
             $stmt->bindValue(':sickness', $this->sickness, PDO::PARAM_STR);
           }     
 
+          
           if ($stmt->execute()) 
           {
             $this->id = $conn->lastInsertId();

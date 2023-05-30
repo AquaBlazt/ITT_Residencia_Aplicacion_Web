@@ -1,17 +1,14 @@
 <?php
-require '\residencia\classes\Database.php';
-require '\residencia\classes\ListaMascotas.php';
-require '\residencia\classes\Url.php';
-require '\residencia\classes\Auth.php';
+require '\residencia\includes\init.php';
 
-session_start();
+
 
 $ListaMascota = new ListaMascotas();
 
 if($_SERVER["REQUEST_METHOD"]=="POST")
 {
-  $db = new Database();
-  $conn = $db->getConn();
+  $conn = require '\residencia\includes\db.php';
+
   
   $ListaMascota->pic = $_POST['pic'];
   $ListaMascota->serial_number = $_POST['serial_number'];
@@ -24,7 +21,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
   if($ListaMascota->create($conn))
     {
     
-      Url::redirect("/site/lista_mascotas.php?id={$ListaMascota->id}");
+      Url::redirect("/lista_mascotas.php?id={$ListaMascota->id}");
     }
 }
 
@@ -32,7 +29,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
  <?php require '\residencia\includes\header.php'; ?>
  <?php require '\residencia\includes\header.php'; ?>
 <?php if (Auth::isLoggedIn()): ?>
-    <a href="menu.php">Menu</a>
+  <a href="\admin\lista_mascotas.php">Admin</a>
+
     <title>Registro de la Mascota</title>
 <?php require '\residencia\includes\registro_formulario_mascota.php'; ?>
 <?php else: ?>

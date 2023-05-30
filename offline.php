@@ -1,9 +1,7 @@
 <?php
-require '\residencia\classes\Url.php';
-require '\residencia\classes\ListaUsers.php';
-require '\residencia\classes\Database.php';
+require '\residencia\includes\init.php';
 
-session_start();
+
 ?>
 
 <?php require '\residencia\includes\header.php'; ?>
