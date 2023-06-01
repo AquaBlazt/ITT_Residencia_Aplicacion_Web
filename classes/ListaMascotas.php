@@ -33,6 +33,27 @@ return $results->fetchAll(PDO::FETCH_ASSOC);
 
   }
 
+
+  public static function getPage($conn, $limit, $offset)
+  {
+    $sql = "SELECT *
+    FROM registro_mascota
+    ORDER BY serial_number
+    LIMIT :limit
+    OFFSET :offset";
+
+$stmt = $conn->prepare($sql);
+$stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+
+$stmt->execute();
+return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    
+
+
+  }
+
 public static function getByID($conn, $id, $columns = '*')
 {
     $sql = "SELECT $columns
@@ -49,6 +70,7 @@ public static function getByID($conn, $id, $columns = '*')
         return $stmt->fetch();
     }
 }
+
 
 public function update($conn)
 {

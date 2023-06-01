@@ -3,10 +3,9 @@ require '\residencia\includes\init.php';
 Auth::requireLogin();
 $conn = require '\residencia\includes\db.php';
 
+$paginator = new Paginator(1, 4);
 
-mysqli_report(MYSQLI_REPORT_OFF);
-
-$registros_mascotas = ListaMascotas::getAll($conn);
+$registros_mascotas = ListaMascotas::getPage($conn, $paginator->limit, $paginator->offset);
 ?>
 
 <?php require '\residencia\includes\header.php'; ?>

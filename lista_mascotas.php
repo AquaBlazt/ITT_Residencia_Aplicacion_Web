@@ -1,17 +1,32 @@
 <?php
 require '\residencia\includes\init.php';
 Auth::requireLogin();
+
 $conn = require '\residencia\includes\db.php';
 
 
-mysqli_report(MYSQLI_REPORT_OFF);
+
 
 $registros_mascotas = ListaMascotas::getAll($conn);
+
+if (isset($_GET['id'])) 
+{
+
+$registro_user = ListaUsers::getByID($conn, $_GET['id']);
+
+}
+ else 
+{
+    $registro_user = null;
+}
 ?>
 
 <?php require '\residencia\includes\header.php'; ?>
 <?php if (Auth::isLoggedIn()): ?>
   <p>Estas conectado. <a href="logout.php">Cerrar Sesion</a></p>
+  
+  <p>Tu ID de usuario es: </p>
+ 
   <h2>Bienvenido</h2>
   <p><a href="registro_mascota.php">Registro</a></p>  
   <title>Lista de mascotas</title>
@@ -34,9 +49,8 @@ $registros_mascotas = ListaMascotas::getAll($conn);
 
 <?php endif; ?>
 <?php else: ?>
- 
+    
  <p>Estas desconectado. <a href="login.php">Inicia Sesión</a></p>
  <p>Si no tienes cuenta, <a href ="registro_user.php">registrate aqui</a></p>
-
 <?php endif; ?>
 <?php require '\residencia\includes\footer.php'; ?>

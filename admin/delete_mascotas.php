@@ -6,7 +6,6 @@ Auth::requireLogin();
 
 $conn = require '\residencia\includes\db.php';
 
-mysqli_report(MYSQLI_REPORT_OFF);
 
 if (isset($_GET['id'])) {
 

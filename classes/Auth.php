@@ -8,24 +8,24 @@
 class Auth
 {
   
- public static function isLoggedIn()
-{
-  return isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'];
-  
-}
+
 
 public static function requireLogin()
 {
   if (! static::isLoggedIn())
   {
+   
     Url::redirect("/offline.php?id=$id");
   }
 }
 
 public static function login()
 {
+  
   session_regenerate_id(true);
   $_SESSION['is_logged_in'] = true;
+  
+
 }
 
 public static function logout()
@@ -41,5 +41,18 @@ if(ini_get("session.use_cookies"))
 
 session_destroy();
 }
+
+public static function isLoggedIn()
+{
+
+  
+return isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'];
+
+
+
+}
+
+
+
 
 }

@@ -4,6 +4,7 @@ require '\residencia\includes\init.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
   $conn = require '\residencia\includes\db.php';
+  
 
 
 
@@ -14,7 +15,7 @@ Url::redirect('/admin/lista_mascotas.php');
 }
 elseif (ListaUsers::authenticate($conn, $_POST['email'], $_POST['password']))
 {
-  
+ 
   Auth::login();
   Url::redirect('/lista_mascotas.php');
 }
