@@ -9,7 +9,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 {
   $conn = require '\residencia\includes\db.php';
 
-  
+  $ListaMascota->usuario_id = $_POST['usuario_id'];
   $ListaMascota->pic = $_POST['pic'];
   $ListaMascota->serial_number = $_POST['serial_number'];
   $ListaMascota->mascot_name = $_POST['mascot_name'];
@@ -29,7 +29,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
  <?php require '\residencia\includes\header.php'; ?>
  <?php require '\residencia\includes\header.php'; ?>
 
-  <a href="\admin\lista_mascotas.php">Admin</a>
+  <a href="\admin\lista_mascotas.php">Menu</a>
 
     <title>Registro de la Mascota</title>
 <?php require '\residencia\includes\registro_formulario_mascota.php'; ?>

@@ -11,6 +11,7 @@
 
 class ListaMascotas
 {
+public $usuario_id;
 public $id;
 public $pic;
 public $serial_number;
@@ -33,26 +34,28 @@ return $results->fetchAll(PDO::FETCH_ASSOC);
 
   }
 
+  public static function getTotal($conn)
+  {
+      return $conn->query('SELECT COUNT(*) FROM registro_mascota')->fetchColumn();
+  }
 
   public static function getPage($conn, $limit, $offset)
-  {
-    $sql = "SELECT *
-    FROM registro_mascota
-    ORDER BY serial_number
-    LIMIT :limit
-    OFFSET :offset";
+    {
+        $sql = "SELECT *
+                FROM registro_mascota
+                ORDER BY serial_number
+                LIMIT :limit
+                OFFSET :offset";
 
-$stmt = $conn->prepare($sql);
-$stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
-$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $stmt = $conn->prepare($sql);
 
-$stmt->execute();
-return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
 
-    
+        $stmt->execute();
 
-
-  }
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 public static function getByID($conn, $id, $columns = '*')
 {
@@ -119,6 +122,10 @@ public function update($conn)
 
 protected function validate()
 {
+  if ($this->usuario_id=='')
+  {
+    $this->errors[]='Se requiere que introduzcas tu ID';
+  }
 if($this->pic=='')
 {
   $this->errors[]='Se requiere una foto de la mascota';
@@ -155,6 +162,9 @@ return empty($this->errors);
 
 
 
+
+
+
 protected function serialNumberExists($serial_number)
 {
  
@@ -187,16 +197,14 @@ return $stmt->execute();
 }
 
 
-
-
-
 public function create($conn)
 {
   if ($this->validate())
   {
 
-  $sql= "INSERT INTO registro_mascota (pic, serial_number, mascot_name, age, gender, sickness, sterilized)
-           VALUES (:pic,
+  $sql= "INSERT INTO registro_mascota (usuario_id, pic, serial_number, mascot_name, age, gender, sickness, sterilized)
+           VALUES (:usuario_id,
+                   :pic,
                    :serial_number,
                    :mascot_name,
                    :age,
@@ -206,7 +214,7 @@ public function create($conn)
           
 
           $stmt = $conn->prepare($sql);
-
+          $stmt->bindValue(':usuario_id', $this->usuario_id, PDO::PARAM_INT);
           $stmt->bindValue(':pic', $this->pic, PDO::PARAM_INT);
           $stmt->bindValue(':serial_number', $this->serial_number, PDO::PARAM_INT);
           $stmt->bindValue(':mascot_name', $this->mascot_name, PDO::PARAM_STR);

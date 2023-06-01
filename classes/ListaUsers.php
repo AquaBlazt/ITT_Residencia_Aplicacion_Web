@@ -75,7 +75,6 @@ return $stmt->fetch() !== false;
 
 }
 
-
 public function create($conn)
 {
   if ($this->validate())
@@ -158,37 +157,6 @@ public static function authenticateAdmin($conn, $email, $password)
               return password_verify($password, $user->password);   
             }  
  }
-
-
-
- function mostrarMascotasRegistradas($usuarioId)
-{
-    global $conexion;
-
-    // Preparar la consulta SQL para seleccionar las mascotas del usuario
-    $consulta = $conexion->prepare("SELECT * FROM registro_mascota WHERE usuario_id = :usuario_id");
-    $consulta->bindParam(':usuario_id', $usuarioId);
-    $consulta->execute();
-
-    // Obtener los resultados de la consulta
-    $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
-
-    // Mostrar los datos de las mascotas registradas por el usuario
-    if (count($resultados) > 0) {
-        echo "Mascotas registradas por el usuario:<br>";
-
-        foreach ($resultados as $mascota) {
-            echo "Nombre: " . $mascota['nombre'] . "<br>";
-            echo "Edad: " . $mascota['edad'] . "<br>";
-            echo "Raza: " . $mascota['raza'] . "<br>";
-            echo "<br>";
-        }
-    } else {
-        echo "El usuario no tiene mascotas registradas.";
-    }
-}
- 
-
 
 
 }

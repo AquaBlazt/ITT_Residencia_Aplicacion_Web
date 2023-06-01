@@ -4,21 +4,10 @@ Auth::requireLogin();
 
 $conn = require '\residencia\includes\db.php';
 
+$paginator = new Paginator($_GET['page'] ?? 1, 4, ListaMascotas::getTotal($conn));
 
+$registros_mascotas = ListaMascotas::getPage($conn, $paginator->limit, $paginator->offset);
 
-
-$registros_mascotas = ListaMascotas::getAll($conn);
-
-if (isset($_GET['id'])) 
-{
-
-$registro_user = ListaUsers::getByID($conn, $_GET['id']);
-
-}
- else 
-{
-    $registro_user = null;
-}
 ?>
 
 <?php require '\residencia\includes\header.php'; ?>
@@ -46,6 +35,24 @@ $registro_user = ListaUsers::getByID($conn, $_GET['id']);
             </li>
         <?php endforeach; ?>
     </ul>
+    <nav>
+        <ul>
+            <li>
+                <?php if ($paginator->previous): ?>
+                    <a href="?page=<?= $paginator->previous; ?>">Atras</a>
+                <?php else: ?>
+                    Atras
+                <?php endif; ?>
+            </li>
+            <li>
+                <?php if ($paginator->next): ?>
+                    <a href="?page=<?= $paginator->next; ?>">Siguiente</a>
+                <?php else: ?>
+                    Siguiente
+                <?php endif; ?>
+            </li>
+        </ul>
+    </nav>
 
 <?php endif; ?>
 <?php else: ?>

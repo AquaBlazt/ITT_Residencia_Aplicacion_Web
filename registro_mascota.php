@@ -8,8 +8,8 @@ $ListaMascota = new ListaMascotas();
 if($_SERVER["REQUEST_METHOD"]=="POST")
 {
   $conn = require '\residencia\includes\db.php';
-
   
+  $ListaMascota->usuario_id = $_POST['usuario_id'];
   $ListaMascota->pic = $_POST['pic'];
   $ListaMascota->serial_number = $_POST['serial_number'];
   $ListaMascota->mascot_name = $_POST['mascot_name'];

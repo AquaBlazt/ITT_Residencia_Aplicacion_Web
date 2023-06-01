@@ -10,9 +10,20 @@
   <body>
   <h2>Formulario de la Mascota</h2>
         <form method="post">   
+
+        <div>
+        <label for="usuario_id">ID</label>
+        <input
+            class="field"
+            type="number"
+            placeholder="ID"
+            name="usuario_id"  
+            id="usuario_id" 
+            value="<?= htmlspecialchars($ListaMascota->usuario_id); ?>"
+          />
+        </div>
           
 <div>
-
           <label for="pic">Foto</label>
           <input class="field" type="file" name="pic" id="pic"/>
 </div>
