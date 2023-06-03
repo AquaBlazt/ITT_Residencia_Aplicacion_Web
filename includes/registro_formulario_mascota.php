@@ -12,7 +12,7 @@
         <form method="post">   
 
         <div>
-        <label for="usuario_id">ID</label>
+        <label for="usuario_id">ID del Usuario</label>
         <input
             class="field"
             type="number"
@@ -48,7 +48,7 @@
 </div>
 
 <div>
-<label for="age">Edad</label>
+<label for="age">Edad(En años)</label>
           <input
             type="number"
             class="field"
@@ -60,12 +60,12 @@
 </div>
 
 <div>
-<label for="gender">Genero</label>
-          <select class="field" name="gender" id="gender" value="<?= htmlspecialchars($ListaMascota->gender); ?>">
-            <option value="">--Elige una opcion--</option>
-            <option value="1">Macho</option>
-            <option value="2">Hembra</option>
-          </select>
+  <label for="gender">Género</label>
+  <select class="field" name="gender" id="gender">
+    <option value="">--Elige una opción--</option>
+    <option value="1" <?= ($ListaMascota->gender == "1") ? "selected" : ""; ?>>Macho</option>
+    <option value="2" <?= ($ListaMascota->gender == "2") ? "selected" : ""; ?>>Hembra</option>
+  </select>
 </div>
 
 <div>
@@ -74,12 +74,12 @@
 </div>
 
 <div>
-<label for="sterilized">Su mascota se encuentra esterilizada?</label>
-          <select class="field" name="sterilized" id="sterilized" value="<?= htmlspecialchars($ListaMascota->sterilized); ?>">>
-          <option value="">--Elige una opcion--</option>
-            <option value="1">Si</option>
-            <option value="2">No</option>
-          </select>
+  <label for="sterilized">¿Su mascota se encuentra esterilizada?</label>
+  <select class="field" name="sterilized" id="sterilized">
+    <option value="">--Elige una opción--</option>
+    <option value="1" <?= ($ListaMascota->sterilized == "1") ? "selected" : ""; ?>>Si</option>
+    <option value="2" <?= ($ListaMascota->sterilized == "2") ? "selected" : ""; ?>>No</option>
+  </select>
 </div>
           
           <button type="submit" class="form-btn">Guardar</button>

@@ -13,6 +13,20 @@ public $sterilized;
 public $errors= [];
 
 
+public static function userGetAll($conn, $userId)
+{
+    $sql = "SELECT *
+            FROM registro_mascota
+            JOIN registro_usuario ON registro_mascota.usuario_id = registro_usuario.id
+            WHERE registro_usuario.id = :userId";
+ 
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':userId', $userId, PDO::PARAM_INT);
+    $stmt->execute();
+ 
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
   public static function getAll($conn)
   {
     $sql = "SELECT *
@@ -143,7 +157,7 @@ if (empty($this->id) && $this->serialNumberExists($this->serial_number))
 
 if (empty($this->usuario_id) === $this->userIdDosentExist($this->usuario_id))
 {
-$this->errors[] = 'No existe un usuario con ese ID';
+$this->errors[]='No existe un usuario con ese ID';
 }
 
 
