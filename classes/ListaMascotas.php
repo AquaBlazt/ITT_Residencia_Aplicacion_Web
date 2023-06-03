@@ -155,9 +155,8 @@ if (empty($this->id) && $this->serialNumberExists($this->serial_number))
   $this->errors[]='Ya existe un registro con ese Num. de Serie';
 }
 
-if (empty($this->usuario_id) === $this->userIdDosentExist($this->usuario_id))
-{
-$this->errors[]='No existe un usuario con ese ID';
+if ($this->userIdDosentExist($this->usuario_id)) {
+  $this->errors[] = 'No existe un usuario con ese ID';
 }
 
 
@@ -167,20 +166,19 @@ return empty($this->errors);
 
 protected function userIdDosentExist($usuario_id)
 {
+  $sql = "SELECT COUNT(*) AS count
+          FROM registro_usuario
+          WHERE id = :usuario_id";
+          
+  $db = Database::getConn();
+  $stmt = $db->prepare($sql);
+  $stmt->bindValue(':usuario_id', $usuario_id, PDO::PARAM_INT);
+  $stmt->execute();
   
-  $sql = "SELECT *
-  FROM registro_mascota
-  WHERE usuario_id = :usuario_id";
-
-
-$db = Database::getConn();
-$stmt = $db->prepare($sql);
-$stmt->bindValue(':usuario_id', $usuario_id, PDO::PARAM_INT);
-
-
-$stmt->execute();
-return $stmt->fetch() !== false;
-
+  $result = $stmt->fetch(PDO::FETCH_ASSOC);
+  $count = $result['count'];
+  
+  return $count === 0;
 }
 
 
