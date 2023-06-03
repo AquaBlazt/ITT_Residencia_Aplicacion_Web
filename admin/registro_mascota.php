@@ -9,14 +9,15 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 {
   $conn = require '\residencia\includes\db.php';
 
-  $ListaMascota->usuario_id = $_POST['usuario_id'];
-  $ListaMascota->pic = $_POST['pic'];
+
+  
   $ListaMascota->serial_number = $_POST['serial_number'];
   $ListaMascota->mascot_name = $_POST['mascot_name'];
   $ListaMascota->age = $_POST['age'];
   $ListaMascota->gender = filter_input(INPUT_POST, 'gender', FILTER_VALIDATE_INT);
   $ListaMascota->sickness = $_POST['sickness'];
   $ListaMascota->sterilized = filter_input(INPUT_POST, 'sterilized', FILTER_VALIDATE_INT);
+  $ListaMascota->usuario_id = $_POST['usuario_id'];
  
   if($ListaMascota->create($conn))
     {
