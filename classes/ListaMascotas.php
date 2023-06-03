@@ -13,7 +13,6 @@ class ListaMascotas
 {
 public $usuario_id;
 public $id;
-public $pic;
 public $serial_number;
 public $mascot_name;
 public $age;
@@ -81,19 +80,18 @@ public function update($conn)
   {
 
   $sql= "UPDATE registro_mascota 
-           SET pic= :pic,
-               serial_number= :serial_number,
+           SET serial_number= :serial_number,
                mascot_name= :mascot_name,
                age= :age,
                gender= :gender,
                sickness= :sickness,
                sterilized= :sterilized
           WHERE id= :id";
+               
 
           $stmt = $conn->prepare($sql);
 
           $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
-          $stmt->bindValue(':pic', $this->pic, PDO::PARAM_INT);
           $stmt->bindValue(':serial_number', $this->serial_number, PDO::PARAM_INT);
           $stmt->bindValue(':mascot_name', $this->mascot_name, PDO::PARAM_STR);
           $stmt->bindValue(':age', $this->age, PDO::PARAM_INT);
@@ -126,10 +124,6 @@ protected function validate()
   {
     $this->errors[]='Se requiere que introduzcas tu ID';
   }
-if($this->pic=='')
-{
-  $this->errors[]='Se requiere una foto de la mascota';
-}
 if($this->serial_number=='')
 {
   $this->errors[]='Se requiere un numero de serie';
@@ -162,9 +156,9 @@ $this->errors[] = 'No existe un usuario con ese ID';
 }
 
 
+
 return empty($this->errors);
 }
-
 
 protected function userIdDosentExist($usuario_id)
 {
@@ -185,15 +179,13 @@ return $stmt->fetch() !== false;
 }
 
 
-
-
-
 protected function serialNumberExists($serial_number)
 {
  
   $sql = "SELECT *
   FROM registro_mascota
   WHERE serial_number = :serial_number";
+
 $db = Database::getConn();
 $stmt = $db->prepare($sql);
 $stmt->bindValue(':serial_number', $serial_number, PDO::PARAM_INT);
@@ -225,26 +217,26 @@ public function create($conn)
   if ($this->validate())
   {
 
-  $sql= "INSERT INTO registro_mascota (usuario_id, pic, serial_number, mascot_name, age, gender, sickness, sterilized)
-           VALUES (:usuario_id,
-                   :pic,
-                   :serial_number,
+  $sql= "INSERT INTO registro_mascota (serial_number, mascot_name, age, gender, sickness, sterilized, usuario_id)
+           VALUES (:serial_number,
                    :mascot_name,
                    :age,
                    :gender,
                    :sickness,
-                   :sterilized)";
+                   :sterilized,
+                   :usuario_id)";
+                   
           
 
           $stmt = $conn->prepare($sql);
-          $stmt->bindValue(':usuario_id', $this->usuario_id, PDO::PARAM_INT);
-          $stmt->bindValue(':pic', $this->pic, PDO::PARAM_INT);
+          
           $stmt->bindValue(':serial_number', $this->serial_number, PDO::PARAM_INT);
           $stmt->bindValue(':mascot_name', $this->mascot_name, PDO::PARAM_STR);
           $stmt->bindValue(':age', $this->age, PDO::PARAM_INT);
           $stmt->bindValue(':gender', $this->gender, PDO::PARAM_INT);
           $stmt->bindValue(':sickness', $this->sickness, PDO::PARAM_STR);
           $stmt->bindValue(':sterilized', $this->sterilized, PDO::PARAM_INT);
+          $stmt->bindValue(':usuario_id', $this->usuario_id, PDO::PARAM_INT);
 
           if ($this->sickness == '') 
           {

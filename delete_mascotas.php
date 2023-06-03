@@ -18,7 +18,7 @@ if(! $ListaMascota)
 }
 
 } else 
-{
+{-
  die("ID invalido, la informacion no se encontro");
 }
 

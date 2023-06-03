@@ -24,11 +24,6 @@
         </div>
           
 <div>
-          <label for="pic">Foto</label>
-          <input class="field" type="file" name="pic" id="pic"/>
-</div>
-
-<div>
 <label for="serial_number">Num. de serie</label>
           <input
             class="field"
