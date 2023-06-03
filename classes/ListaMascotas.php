@@ -1,13 +1,4 @@
 <?php
-/**
- * La clase ListaMascotas incluye todo lo relacionado a las mascotas registradas las
- * cuales son mostradas en forma de lista
- * 
- * @function getAll Muestra todos los registros dentro de la base de datos
- * @function getByID Muestra la informacion individual de los registros en la base de datos
- * @function update Permite editar y actualizar un registro previamente ingresado
- * @function delete Permite eliminar informacion registrada previamente
- */
 
 class ListaMascotas
 {
