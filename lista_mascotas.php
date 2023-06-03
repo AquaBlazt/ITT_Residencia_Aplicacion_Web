@@ -4,9 +4,10 @@ Auth::requireLogin();
 
 $conn = require '/residencia/includes/db.php';
 
-$userId = Auth::getUserId(); 
- 
+$userId = 62;
+
 $registros_mascotas = ListaMascotas::userGetAll($conn, $userId);
+var_dump($registros_mascotas);
 
 ?>
 
