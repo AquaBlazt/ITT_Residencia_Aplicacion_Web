@@ -4,7 +4,7 @@ Auth::requireLogin();
 
 $conn = require '/residencia/includes/db.php';
 
-$userId = 61; 
+$userId = Auth::getUserId(); 
  
 $registros_mascotas = ListaMascotas::userGetAll($conn, $userId);
 
@@ -16,7 +16,8 @@ $registros_mascotas = ListaMascotas::userGetAll($conn, $userId);
 <body>
 <?php if (Auth::isLoggedIn()): ?>
     <p>Estás conectado. <a href="logout.php">Cerrar Sesión</a></p>
-    <p>Tu ID de usuario es: <?= $userId ?></p>
+    <p>Tu ID de usuario es: <?= htmlspecialchars($userId) ?></p>
+
  
     <h2>Bienvenido</h2>
     <p><a href="registro_mascota.php">Registro</a></p>  

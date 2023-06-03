@@ -19,14 +19,12 @@ public static function requireLogin()
   }
 }
 
-public static function login()
-{
-  
+public static function login($userId) {
   session_regenerate_id(true);
   $_SESSION['is_logged_in'] = true;
-  
-
+  $_SESSION['user_id'] = $userId;
 }
+
 
 public static function logout()
 {
@@ -48,10 +46,15 @@ public static function isLoggedIn()
   
 return isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'];
 
-
-
 }
 
+public static function getUserId() {
+  if (self::isLoggedIn()) {
+    return $_SESSION['user_id'];
+  } else {
+    return null;
+  }
+}
 
 
 
