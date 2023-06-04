@@ -106,7 +106,7 @@ class ListaUsers
             return password_verify($password, $user->password);
         }
 
-        return false; // Usuario no encontrado o contraseña incorrecta
+        return false; 
     }
 
     public static function authenticateAdmin($conn, $email, $password)
@@ -123,6 +123,6 @@ class ListaUsers
             return password_verify($password, $user->password);
         }
 
-        return false; // Administrador no encontrado o contraseña incorrecta
+        return false; 
     }
 }

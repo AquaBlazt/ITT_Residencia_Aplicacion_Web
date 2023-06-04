@@ -1,13 +1,13 @@
 <?php
 require '/residencia/includes/init.php';
 Auth::requireLogin();
-
 $conn = require '/residencia/includes/db.php';
 
-$userId = 62;
 
+$userId = Auth::getUserId();
 $registros_mascotas = ListaMascotas::userGetAll($conn, $userId);
 var_dump($registros_mascotas);
+var_dump($userId);
 
 ?>
 

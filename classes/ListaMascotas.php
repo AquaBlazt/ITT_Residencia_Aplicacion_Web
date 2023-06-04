@@ -17,8 +17,7 @@ public static function userGetAll($conn, $userId)
 {
     $sql = "SELECT *
             FROM registro_mascota
-            JOIN registro_usuario ON registro_mascota.usuario_id = registro_usuario.id
-            WHERE registro_usuario.id = :userId";
+            WHERE usuario_id = :userId";
  
     $stmt = $conn->prepare($sql);
     $stmt->bindValue(':userId', $userId, PDO::PARAM_INT);

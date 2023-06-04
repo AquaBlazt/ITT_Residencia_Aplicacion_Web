@@ -7,18 +7,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    if (ListaUsers::authenticateAdmin($conn, $email, $password)) {
+    if (ListaUsers::authenticateAdmin($conn, $email, $password)) 
+    {
         $userId = Auth::getUserId();
         Auth::login($userId);
         Url::redirect('/admin/lista_mascotas.php');
-    } elseif (ListaUsers::authenticate($conn, $email, $password)) {
+    } 
+    elseif (ListaUsers::authenticate($conn, $email, $password)) 
+    {
         $userId = Auth::getUserId();
         Auth::login($userId);
+        var_dump($userId);
         Url::redirect('/lista_mascotas.php');
-    } else {
+    } 
+    else 
+    {
         $error = "Error al iniciar sesión";
     }
 }
+
 ?>
 
 <?php require '/residencia/includes/header.php'; ?>
