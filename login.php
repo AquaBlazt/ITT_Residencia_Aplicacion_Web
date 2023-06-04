@@ -1,7 +1,7 @@
 <?php
 require '/residencia/includes/init.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $conn = require '/residencia/includes/db.php';
 
     $email = $_POST['email'];

@@ -85,11 +85,11 @@ class ListaUsers
 
             if ($stmt->execute()) {
                 $this->id = $conn->lastInsertId();
-                return true; // Usuario creado correctamente
+                return true; 
             }
         }
 
-        return false; // Error de validación o falla en la creación del usuario
+        return false; 
     }
 
     public static function authenticate($conn, $email, $password)
