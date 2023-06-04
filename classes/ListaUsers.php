@@ -93,36 +93,28 @@ class ListaUsers
     }
 
     public static function authenticate($conn, $email, $password)
-    {
-        $sql = "SELECT *
-                FROM registro_usuario
-                WHERE email = :email";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
-        $stmt->setFetchMode(PDO::FETCH_CLASS, 'ListaUsers');
-        $stmt->execute();
+{
+    $sql = "SELECT *
+            FROM registro_usuario
+            WHERE email = :email";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+    $stmt->setFetchMode(PDO::FETCH_CLASS, 'ListaUsers');
+    $stmt->execute();
 
-        if ($user = $stmt->fetch()) {
-            return password_verify($password, $user->password);
+    if ($user = $stmt->fetch()) {
+        if (password_verify($password, $user->password)) {
+            $_SESSION['user_id'] = $user->id;
+
+            if ($user->type == 'admin') {
+                return 'admin';
+            } else {
+                return 'user';
+            }
         }
-
-        return false; 
     }
 
-    public static function authenticateAdmin($conn, $email, $password)
-    {
-        $sql = "SELECT *
-                FROM registro_usuario
-                WHERE type = 'admin' AND email = :email";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
-        $stmt->setFetchMode(PDO::FETCH_CLASS, 'ListaUsers');
-        $stmt->execute();
+    return false;
+}
 
-        if ($user = $stmt->fetch()) {
-            return password_verify($password, $user->password);
-        }
-
-        return false; 
-    }
 }

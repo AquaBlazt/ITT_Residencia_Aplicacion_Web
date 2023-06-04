@@ -6,25 +6,33 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $userId = Auth::getUserId();
+    Auth::login($userId);
 
-    if (ListaUsers::authenticateAdmin($conn, $email, $password)) 
+   
+  
+
+    if (ListaUsers::authenticate($conn, $email, $password) === 'user')
     {
-        $userId = Auth::getUserId();
-        Auth::login($userId);
-        Url::redirect('/admin/lista_mascotas.php');
-    } 
-    elseif (ListaUsers::authenticate($conn, $email, $password)) 
-    {
-        $userId = Auth::getUserId();
-        Auth::login($userId);
-        var_dump($userId);
+   
         Url::redirect('/lista_mascotas.php');
+        var_dump($userId);
+        var_dump($email);   
+        
     } 
-    else 
+    
+    elseif (ListaUsers::authenticate($conn, $email, $password) === 'admin')
+    {
+        Url::redirect('/admin/lista_mascotas.php');
+        var_dump($userId);
+        var_dump($email);   
+    }
+    else
     {
         $error = "Error al iniciar sesión";
     }
 }
+
 
 ?>
 

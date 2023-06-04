@@ -29,7 +29,7 @@ class Auth
      public static function getUserId()
     {
        
-        return self::isLoggedIn() ? $_SESSION['is_logged_in'] : null;
+        return self::isLoggedIn() ? $_SESSION['user_id'] : null;
         
     }
 

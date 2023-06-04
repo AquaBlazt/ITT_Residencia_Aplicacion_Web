@@ -6,8 +6,7 @@ $conn = require '/residencia/includes/db.php';
 
 $userId = Auth::getUserId();
 $registros_mascotas = ListaMascotas::userGetAll($conn, $userId);
-var_dump($registros_mascotas);
-var_dump($userId);
+
 
 ?>
 
