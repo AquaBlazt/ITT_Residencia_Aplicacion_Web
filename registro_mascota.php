@@ -4,6 +4,7 @@ Auth::requireLogin();
 
 
 $ListaMascota = new ListaMascotas();
+$userId = Auth::getUserId();
 
 if($_SERVER["REQUEST_METHOD"]=="POST")
 {
@@ -28,8 +29,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 
 ?>
  <?php require '\residencia\includes\header.php'; ?>
- <?php require '\residencia\includes\header.php'; ?>
   <a href="lista_mascotas.php">Mis mascotas</a>
     <title>Registro de la Mascota</title>
+    <p>Tu ID de usuario administrador es: <?= htmlspecialchars($userId) ?></p>
 <?php require '\residencia\includes\registro_formulario_mascota.php'; ?>
     <?php require '\residencia\includes\footer.php'; ?>

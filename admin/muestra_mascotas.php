@@ -35,6 +35,7 @@ $registro_mascota = ListaMascotas::getByID($conn, $_GET['id']);
     </article>
     <a href="edicion_mascotas.php?id=<?= $registro_mascota->id; ?>">Editar</a>
     <a href="delete_mascotas.php?id=<?= $registro_mascota->id; ?>">Eliminar</a>
+    <a href="foto.php?id=<?= $registro_mascota->id; ?>">Foto</a>
     <a href="lista_mascotas.php">Lista de Mascotas</a>
    
 <?php else : ?>

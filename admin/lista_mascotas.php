@@ -4,13 +4,15 @@ Auth::requireLogin();
 $conn = require '\residencia\includes\db.php';
 
 $paginator = new Paginator($_GET['page'] ?? 1, 4, ListaMascotas::getTotal($conn));
-$registros_mascotas = ListaMascotas::getPage($conn, $paginator->limit, $paginator->offset);
+$userId = Auth::getUserId();
+$registros_mascotas = ListaMascotas::getPage($conn,$userId, $paginator->limit, $paginator->offset);
 
 ?>
 
 <?php require '\residencia\includes\header.php'; ?>
 <?php if (Auth::isLoggedIn()): ?>
   <p>Estas conectado. <a href="logout.php">Cerrar Sesion</a></p>
+  <p>Tu ID de usuario administrador es: <?= htmlspecialchars($userId) ?></p>
   <h2>Administracion</h2>
   <title>Lista de mascotas</title>
   <p><a href="registro_mascota.php">Registro</a></p>  

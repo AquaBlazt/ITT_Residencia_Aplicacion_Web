@@ -35,7 +35,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
   if($ListaMascota->update($conn))
     {
     
-      Url::redirect("/admin/lista_mascotas.php?id={$ListaMascota->id}");
+      Url::redirect("/admin/muestra_mascotas.php?id={$ListaMascota->id}");
     }
 }
 
