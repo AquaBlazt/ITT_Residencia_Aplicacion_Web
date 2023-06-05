@@ -9,23 +9,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $userId = Auth::getUserId();
     Auth::login($userId);
 
-   
-  
-
     if (ListaUsers::authenticate($conn, $email, $password) === 'user')
     {
    
         Url::redirect('/lista_mascotas.php');
-        var_dump($userId);
-        var_dump($email);   
+         
         
     } 
     
     elseif (ListaUsers::authenticate($conn, $email, $password) === 'admin')
     {
         Url::redirect('/admin/lista_mascotas.php');
-        var_dump($userId);
-        var_dump($email);   
+      
     }
     else
     {
