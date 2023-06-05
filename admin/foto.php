@@ -24,6 +24,36 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 
   var_dump($_FILES);
 
+  try {
+
+      if (empty($_FILES)) {
+          throw new Exception('Invalido');
+      }
+
+      switch ($_FILES['file']['error']) {
+          case UPLOAD_ERR_OK:
+              break;
+
+          case UPLOAD_ERR_NO_FILE:
+              throw new Exception('Debe subir algo');
+              break;
+
+          case UPLOAD_ERR_INI_SIZE:
+              throw new Exception('Archivo muy grande');
+              break;
+
+          default:
+              throw new Exception('Error');
+      }
+
+      if ($_FILES['file']['size'] > 1000000) {
+          throw new Exception('El archivo pesa mucho');
+      }
+
+  } catch (Exception $e) {
+      echo $e->getMessage();
+  }
+
  
  
 }
