@@ -17,7 +17,6 @@ $registro_mascota = ListaMascotas::getByID($conn, $_GET['id']);
 }
 
 ?>
-
 <?php require '\residencia\includes\header.php'; ?>
   <title>Muestra de las mascotas registradas</title>
 </head>
@@ -25,6 +24,9 @@ $registro_mascota = ListaMascotas::getByID($conn, $_GET['id']);
 <?php if ($registro_mascota) : ?>
     <article>
         <h2><?= htmlspecialchars($registro_mascota->serial_number); ?></h2>
+        <?php if ($registro_mascota->image_file) : ?>
+    <img src="uploads\<?= $registro_mascota->image_file; ?>">
+    <?php endif; ?>
         <p><?= htmlspecialchars($registro_mascota->mascot_name); ?></p>
         <p><?= htmlspecialchars($registro_mascota->age); ?></p>
         <p><?= htmlspecialchars($registro_mascota->gender); ?></p>
@@ -32,6 +34,7 @@ $registro_mascota = ListaMascotas::getByID($conn, $_GET['id']);
         <p><?= htmlspecialchars($registro_mascota->sterilized); ?></p>
     </article>
     <a href="edicion_mascotas.php?id=<?= $registro_mascota->id; ?>">Editar</a>
+    <a href="foto.php?id=<?= $registro_mascota->id; ?>">Foto</a>
     <a href="lista_mascotas.php">Mis mascotas</a>
     
  

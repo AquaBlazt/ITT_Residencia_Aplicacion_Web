@@ -3,9 +3,9 @@ require '\residencia\includes\init.php';
 Auth::requireLogin();
 $conn = require '\residencia\includes\db.php';
 
-$paginator = new Paginator($_GET['page'] ?? 1, 4, ListaMascotas::getTotal($conn));
+
 $userId = Auth::getUserId();
-$registros_mascotas = ListaMascotas::getPage($conn,$userId, $paginator->limit, $paginator->offset);
+$registros_mascotas = ListaMascotas::GetAll($conn, $userId);
 
 ?>
 
@@ -36,25 +36,7 @@ $registros_mascotas = ListaMascotas::getPage($conn,$userId, $paginator->limit, $
         <?php endforeach; ?>
         </tbody>
     </table>
-    <nav>
-        <ul>
-            <li>
-                <?php if ($paginator->previous): ?>
-                    <a href="?page=<?= $paginator->previous; ?>">Atras</a>
-                <?php else: ?>
-                    Atras
-                <?php endif; ?>
-            </li>
-            <li>
-                <?php if ($paginator->next): ?>
-                    <a href="?page=<?= $paginator->next; ?>">Siguiente</a>
-                <?php else: ?>
-                    Siguiente
-                <?php endif; ?>
-            </li>
-        </ul>
-    </nav>
-
+  
 <?php endif; ?>
 <?php else: ?>
  

@@ -11,6 +11,7 @@ public $gender;
 public $sickness;
 public $sterilized;
 public $errors= [];
+public $image_file;
 
 
 public static function userGetAll($conn, $userId)
@@ -37,28 +38,6 @@ return $results->fetchAll(PDO::FETCH_ASSOC);
 
   }
 
-  public static function getTotal($conn)
-  {
-      return $conn->query('SELECT COUNT(*) FROM registro_mascota')->fetchColumn();
-  }
-
-  public static function getPage($conn, $limit, $offset)
-    {
-        $sql = "SELECT *
-                FROM registro_mascota
-                ORDER BY serial_number
-                LIMIT :limit
-                OFFSET :offset";
-
-        $stmt = $conn->prepare($sql);
-
-        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
-        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-
-        $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
 
 public static function getByID($conn, $id, $columns = '*')
 {
@@ -260,5 +239,20 @@ public function create($conn)
   {
     return false;
   }
+}
+
+
+public function setImageFile($conn, $filename)
+{
+    $sql = "UPDATE registro_mascota
+            SET image_file = :image_file
+            WHERE id = :id";
+
+    $stmt = $conn->prepare($sql);
+
+    $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
+    $stmt->bindValue(':image_file', $filename, PDO::PARAM_STR);
+
+    return $stmt->execute();
 }
 }

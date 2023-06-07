@@ -26,7 +26,11 @@ $registro_mascota = ListaMascotas::getByID($conn, $_GET['id']);
 <body>
 <?php if ($registro_mascota) : ?>
     <article>
+   
         <h2><?= htmlspecialchars($registro_mascota->serial_number); ?></h2>
+        <?php if ($registro_mascota->image_file) : ?>
+    <img src="\uploads\<?= $registro_mascota->image_file; ?>">
+    <?php endif; ?>
         <p><?= htmlspecialchars($registro_mascota->mascot_name); ?></p>
         <p><?= htmlspecialchars($registro_mascota->age); ?></p>
         <p><?= htmlspecialchars($registro_mascota->gender); ?></p>

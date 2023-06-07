@@ -72,14 +72,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
        $filename = $base . "." . $pathinfo['extension'];
 
-       $destination = "../uploads/$filename";
+       $destination = "uploads/$filename";
 
        $i = 1;
 
        while (file_exists($destination)) {
 
            $filename = $base . "-$i." . $pathinfo['extension'];
-           $destination = "../uploads/$filename";
+           $destination = "uploads/$filename";
 
            $i++;
        }
@@ -88,12 +88,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
            if ($ListaMascota->setImageFile($conn, $filename)) {
 
-            Url::redirect("/admin/foto.php?id={$ListaMascota->id}");            
+               Url::redirect("/foto.php?id={$ListaMascota->id}");                
 
            }
 
        } else {
-        
+
            throw new Exception('Error, no se subio la foto');
 
        }
@@ -110,7 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <h2>Foto de la Mascota</h2>
 
 <?php if ($ListaMascota->image_file) : ?>
-    <img src="/uploads/<?= $ListaMascota->image_file; ?>">
+    <img src="\uploads\<?= $ListaMascota->image_file; ?>">
 <?php endif; ?>
 
 <form method="post" enctype="multipart/form-data">
@@ -121,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <button>Subir</button>
-    <a href="/admin/muestra_mascotas.php?id=<?= $ListaMascota->id; ?>">Cancelar</a>
+    <a href="muestra_mascotas.php?id=<?= $ListaMascota->id; ?>">Cancelar</a>
 
 
 </form>
