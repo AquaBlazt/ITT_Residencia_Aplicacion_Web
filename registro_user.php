@@ -1,4 +1,5 @@
 <?php
+require '\residencia\includes\init.php';
 
 
 $ListaUser = new ListaUsers();
