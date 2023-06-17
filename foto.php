@@ -21,7 +21,7 @@ if(! $ListaMascota)
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    var_dump($_FILES);
+   
 
     try {
 
@@ -86,9 +86,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
        if (move_uploaded_file($_FILES['file']['tmp_name'], $destination)) {
 
+        $previous_image = $article->image_file;
+
            if ($ListaMascota->setImageFile($conn, $filename)) {
 
-               Url::redirect("/foto.php?id={$ListaMascota->id}");                
+            if ($previous_image) {
+                unlink("../uploads/$previous_image");
+            }
+
+            Url::redirect("/foto.php?id={$ListaMascota->id}");            
 
            }
 

@@ -1,6 +1,4 @@
 <?php
-require '\residencia\includes\init.php';
-
 
 
 $ListaUser = new ListaUsers();
@@ -9,7 +7,6 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 {
 
 $conn = require '\residencia\includes\db.php';
-
 
   $ListaUser->name = $_POST['name'];
   $ListaUser->email  = $_POST['email'];
@@ -27,6 +24,7 @@ $conn = require '\residencia\includes\db.php';
     {
     
     Url::redirect("/login.php?id={$ListaUser->id}");
+
     }
 }
 
