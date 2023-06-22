@@ -26,11 +26,13 @@ $registros_mascotas = ListaMascotas::userGetAll($conn, $userId);
         <p>No hay ningún registro de mascotas.</p>
     <?php else: ?>
         <ul>
+        <h2> Mis mascotas </h2>
             <?php foreach ($registros_mascotas as $registro): ?>
+                
                 <li>
                     <article>
-                        <h2><a href="muestra_mascotas.php?id=<?= $registro['id']; ?>"><?= htmlspecialchars($registro['serial_number']); ?></a></h2>
-                        <p><?= htmlspecialchars($registro['mascot_name']); ?></p>
+                    <h3>Num. de Serie: <a href="muestra_mascotas.php?id=<?= $registro['id']; ?>"><?= htmlspecialchars($registro['serial_number']); ?></a></h3>
+                        <p><p>Nombre: <?= htmlspecialchars($registro['mascot_name']); ?></p></p>
                     </article>
                 </li>
             <?php endforeach; ?>

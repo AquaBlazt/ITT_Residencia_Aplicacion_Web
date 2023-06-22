@@ -24,13 +24,13 @@ $registros_mascotas = ListaMascotas::GetAll($conn, $userId);
 
     <table>
         <thead>
-            <th>Lista de las mascotas</th>
+            <th>Lista de las mascotas registradas</th>
         </thead>
         <tbody>
         <?php foreach ($registros_mascotas as $registro): ?>
             <tr>
                 <td>
-                    <a href="/admin/muestra_mascotas.php?id=<?= $registro['id']; ?>"><?= htmlspecialchars($registro['serial_number']); ?></a>         
+                    <p>Num. de serie: <a href="/admin/muestra_mascotas.php?id=<?= $registro['id']; ?>"><?= htmlspecialchars($registro['serial_number']); ?></a></p>         
                 </td>
             </tr>
         <?php endforeach; ?>

@@ -24,7 +24,7 @@ if(! $ListaMascota)
 if($_SERVER["REQUEST_METHOD"]=="POST")
 {
   
-
+  
   $ListaMascota->serial_number = $_POST['serial_number'];
   $ListaMascota->mascot_name = $_POST['mascot_name'];
   $ListaMascota->age = $_POST['age'];
