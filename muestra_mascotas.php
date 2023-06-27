@@ -32,6 +32,8 @@ $registro_mascota = ListaMascotas::getByID($conn, $_GET['id']);
         <p><p>Genero(Macho->1, Hembra->2): <?= htmlspecialchars($registro_mascota->gender); ?></p></p>
         <p><p>Descripcion: <?= htmlspecialchars($registro_mascota->sickness); ?></p></p>
         <p><p>Esterilizado(Si->1, No->2): <?= htmlspecialchars($registro_mascota->sterilized); ?></p></p>
+        <p><p>Num. de Contacto en caso de extravio: <?= htmlspecialchars($registro_mascota->phone_number); ?></p></p>
+
     </article>
     <a href="edicion_mascotas.php?id=<?= $registro_mascota->id; ?>">Editar</a>
     <a href="foto.php?id=<?= $registro_mascota->id; ?>">Foto</a>

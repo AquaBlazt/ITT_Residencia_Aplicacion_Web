@@ -10,6 +10,7 @@ public $age;
 public $gender;
 public $sickness;
 public $sterilized;
+public $phone_number;
 public $errors= [];
 public $image_file;
 
@@ -56,6 +57,24 @@ public static function getByID($conn, $id, $columns = '*')
     }
 }
 
+public static function search($conn, $search)
+{
+    $sql = "SELECT *
+            FROM registro_mascota
+            WHERE serial_number LIKE :search";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':search', '%' . $search . '%');
+    if ($stmt->execute()) {
+
+      return $stmt->fetch();
+     
+  }
+  
+}
+
+
+
 
 public function update($conn)
 {
@@ -68,7 +87,8 @@ public function update($conn)
                age= :age,
                gender= :gender,
                sickness= :sickness,
-               sterilized= :sterilized
+               sterilized= :sterilized,
+               phone_number= :phone_number
           WHERE id= :id";
                
 
@@ -80,6 +100,7 @@ public function update($conn)
           $stmt->bindValue(':age', $this->age, PDO::PARAM_INT);
           $stmt->bindValue(':gender', $this->gender, PDO::PARAM_INT);
           $stmt->bindValue(':sickness', $this->sickness, PDO::PARAM_STR);
+          $stmt->bindValue(':phone_number', $this->phone_number, PDO::PARAM_INT);
           $stmt->bindValue(':sterilized', $this->sterilized, PDO::PARAM_INT);
 
           if ($this->sickness == '') 
@@ -126,6 +147,10 @@ if($this->gender=='')
 if($this->sterilized=='')
 {
   $this->errors[]='Se requiere saber si la mascota esta esterilizada';
+}
+if($this->phone_number=='')
+{
+  $this->errors[]='Se requiere un num. telefonico para contactar al dueño';
 }
 
 if (empty($this->id) && $this->serialNumberExists($this->serial_number))
@@ -198,13 +223,14 @@ public function create($conn)
   if ($this->validate())
   {
 
-  $sql= "INSERT INTO registro_mascota (serial_number, mascot_name, age, gender, sickness, sterilized, usuario_id)
+  $sql= "INSERT INTO registro_mascota (serial_number, mascot_name, age, gender, sickness, sterilized, phone_number, usuario_id)
            VALUES (:serial_number,
                    :mascot_name,
                    :age,
                    :gender,
                    :sickness,
                    :sterilized,
+                   :phone_number,
                    :usuario_id)";
                    
           
@@ -217,6 +243,7 @@ public function create($conn)
           $stmt->bindValue(':gender', $this->gender, PDO::PARAM_INT);
           $stmt->bindValue(':sickness', $this->sickness, PDO::PARAM_STR);
           $stmt->bindValue(':sterilized', $this->sterilized, PDO::PARAM_INT);
+          $stmt->bindValue(':phone_number', $this->phone_number, PDO::PARAM_INT);
           $stmt->bindValue(':usuario_id', $this->usuario_id, PDO::PARAM_INT);
 
           if ($this->sickness == '') 

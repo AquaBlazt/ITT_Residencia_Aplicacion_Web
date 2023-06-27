@@ -28,6 +28,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
   $ListaMascota->age = $_POST['age'];
   $ListaMascota->gender = filter_input(INPUT_POST, 'gender', FILTER_VALIDATE_INT);
   $ListaMascota->sickness = $_POST['sickness'];
+  $ListaMascota->phone_number = $_POST['phone_number'];
   $ListaMascota->sterilized = filter_input(INPUT_POST, 'sterilized', FILTER_VALIDATE_INT);
  
 

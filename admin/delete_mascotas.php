@@ -40,4 +40,4 @@ if ($ListaMascota->delete($conn))
     <button>Eliminar</button>
     <a href="/admin/muestra_mascotas.php?id=<?= $ListaMascota->id; ?>">Cancel</a>
 </form>
-<?php require '\residencia\includes\header.php'; ?>
+<?php require '\residencia\includes\footer.php'; ?>

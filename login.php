@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
     <button type="submit">Iniciar Sesión</button>
     <p>Si no tienes cuenta, <a href="registro_user.php">regístrate aquí.</a></p>
-    <p>¿Encontraste a una mascota?<a href = ""> comunicate con su dueño aqui.</a></p>
+    <p>¿Encontraste a una mascota?<a href = "consulta.php"> comunicate con su dueño aqui.</a></p>
 </form>
 
 <?php require '/residencia/includes/footer.php'; ?>

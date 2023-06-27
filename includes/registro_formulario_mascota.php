@@ -81,6 +81,19 @@
     <option value="2" <?= ($ListaMascota->sterilized == "2") ? "selected" : ""; ?>>No</option>
   </select>
 </div>
+
+
+<div>
+<label for="phone_number">Num. Telefonico(Se usara en casos de extravio)</label>
+          <input
+            type="number"
+            class="field"
+            placeholder="Num. Telefonico"
+            name="phone_number"
+            id="phone_number"   
+            value="<?= htmlspecialchars($ListaMascota->phone_number); ?>"        
+          />
+</div>
           
           <button type="submit" class="form-btn">Guardar</button>
           
