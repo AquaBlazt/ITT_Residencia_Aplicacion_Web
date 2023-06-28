@@ -114,10 +114,7 @@ public function update($conn)
 
         return $stmt->execute();
   }
-  else
-  {
-    $this->errors[]='Se requiere un num. telefonico para contactar al dueño';
-  }
+ 
 }
 
 protected function validate()

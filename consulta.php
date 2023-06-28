@@ -15,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 ?>
 <?php require '\residencia\includes\header.php'; ?>
+<a href="login.php">Inicio</a>
 <p>¡Si encontraste una mascota puedes ayudarnos a localizar a su dueño!</p>
   <p>Solamente debes revisar el collar de la mascota, en este se encuentra un numero
     el cual simplemente debes introducir aqui mismo y te mostrara el numero telefonico de su dueño.</p>
@@ -25,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <body>
 <form method="post">
     <?php else: ?>
+      <p>Foto: <img src="uploads\<?= $busqueda->image_file; ?>"></p>
     <p><p>Nombre de la mascota: <?= htmlspecialchars($busqueda->mascot_name); ?></p></p>
         <p><p>Edad(En años): <?= htmlspecialchars($busqueda->age); ?></p></p>
         <p><p>Genero(Macho->1, Hembra->2): <?= htmlspecialchars($busqueda->gender); ?></p></p>
