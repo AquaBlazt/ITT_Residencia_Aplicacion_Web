@@ -28,7 +28,7 @@ $registro_mascota = ListaMascotas::getByID($conn, $_GET['id']);
             <h3>Foto: <img src="uploads\<?= $registro_mascota->image_file; ?>"></h3>
     <?php endif; ?>
         <p><p>Nombre: <?= htmlspecialchars($registro_mascota->mascot_name); ?></p></p>
-        <p><p>Edad: <?= htmlspecialchars($registro_mascota->age); ?></p></p>
+        <p><p>Edad(En años): <?= htmlspecialchars($registro_mascota->age); ?></p></p>
         <p><p>Genero(Macho->1, Hembra->2): <?= htmlspecialchars($registro_mascota->gender); ?></p></p>
         <p><p>Descripcion: <?= htmlspecialchars($registro_mascota->sickness); ?></p></p>
         <p><p>Esterilizado(Si->1, No->2): <?= htmlspecialchars($registro_mascota->sterilized); ?></p></p>

@@ -65,13 +65,11 @@ public static function search($conn, $search)
 
     $stmt = $conn->prepare($sql);
     $stmt->bindValue(':search', '%' . $search . '%');
-    if ($stmt->execute()) {
+    $stmt->execute();
 
-      return $stmt->fetch();
-     
-  }
-  
+    return $stmt->fetch(PDO::FETCH_OBJ); 
 }
+
 
 
 
@@ -118,7 +116,7 @@ public function update($conn)
   }
   else
   {
-    return false;
+    $this->errors[]='Se requiere un num. telefonico para contactar al dueño';
   }
 }
 
@@ -161,6 +159,7 @@ if (empty($this->id) && $this->serialNumberExists($this->serial_number))
 if ($this->userIdDosentExist($this->usuario_id)) {
   $this->errors[] = 'No existe un usuario con ese ID';
 }
+
 
 
 
