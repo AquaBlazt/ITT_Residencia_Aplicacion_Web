@@ -1,0 +1,276 @@
+<?php
+
+class ListaMascotas
+{
+public $usuario_id;
+public $id;
+public $serial_number;
+public $mascot_name;
+public $age;
+public $gender;
+public $sickness;
+public $sterilized;
+public $phone_number;
+public $errors= [];
+public $image_file;
+
+
+public static function userGetAll($conn, $userId)
+{
+    $sql = "SELECT *
+            FROM registro_mascota
+            WHERE usuario_id = :userId";
+ 
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':userId', $userId, PDO::PARAM_INT);
+    $stmt->execute();
+ 
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+  public static function getAll($conn)
+  {
+    $sql = "SELECT *
+    FROM registro_mascota
+    ORDER BY serial_number;";
+
+$results = $conn->query($sql);
+return $results->fetchAll(PDO::FETCH_ASSOC);
+
+  }
+
+
+public static function getByID($conn, $id, $columns = '*')
+{
+    $sql = "SELECT $columns
+            FROM registro_mascota
+            WHERE id = :id";
+
+    $stmt = $conn->prepare($sql);
+
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    $stmt->setFetchMode(PDO::FETCH_CLASS, 'ListaMascotas');
+
+    if ($stmt->execute()) {
+
+        return $stmt->fetch();
+    }
+}
+
+public static function search($conn, $search)
+{
+    $sql = "SELECT *
+            FROM registro_mascota
+            WHERE serial_number LIKE :search";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':search', '%' . $search . '%');
+    $stmt->execute();
+
+    return $stmt->fetch(PDO::FETCH_OBJ); 
+}
+
+
+
+
+
+public function update($conn)
+{
+  if ($this->validate())
+  {
+
+  $sql= "UPDATE registro_mascota 
+           SET serial_number= :serial_number,
+               mascot_name= :mascot_name,
+               age= :age,
+               gender= :gender,
+               sickness= :sickness,
+               sterilized= :sterilized,
+               phone_number= :phone_number
+          WHERE id= :id";
+               
+
+          $stmt = $conn->prepare($sql);
+
+          $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
+          $stmt->bindValue(':serial_number', $this->serial_number, PDO::PARAM_INT);
+          $stmt->bindValue(':mascot_name', $this->mascot_name, PDO::PARAM_STR);
+          $stmt->bindValue(':age', $this->age, PDO::PARAM_INT);
+          $stmt->bindValue(':gender', $this->gender, PDO::PARAM_INT);
+          $stmt->bindValue(':sickness', $this->sickness, PDO::PARAM_STR);
+          $stmt->bindValue(':phone_number', $this->phone_number, PDO::PARAM_INT);
+          $stmt->bindValue(':sterilized', $this->sterilized, PDO::PARAM_INT);
+
+          if ($this->sickness == '') 
+          {
+            $stmt->bindValue(':sickness', null, PDO::PARAM_NULL);
+          } 
+          else 
+          {
+            $stmt->bindValue(':sickness', $this->sickness, PDO::PARAM_STR);
+          }     
+
+         
+
+        return $stmt->execute();
+  }
+ 
+}
+
+protected function validate()
+{
+  if ($this->usuario_id=='')
+  {
+    $this->errors[]='Se requiere que introduzcas tu ID';
+  }
+if($this->serial_number=='')
+{
+  $this->errors[]='Se requiere un numero de serie';
+}
+if($this->mascot_name=='')
+{
+  $this->errors[]='Se requiere el nombre de la mascota';
+}
+if($this->age=='')
+{
+  $this->errors[]='Se requiere la edad de la mascota';
+}
+if($this->gender=='')
+{
+  $this->errors[]='Se requiere el genero de la mascota';
+}
+if($this->sterilized=='')
+{
+  $this->errors[]='Se requiere saber si la mascota esta esterilizada';
+}
+if($this->phone_number=='')
+{
+  $this->errors[]='Se requiere un num. telefonico para contactar al dueño';
+}
+
+if (empty($this->id) && $this->serialNumberExists($this->serial_number))
+{
+  $this->errors[]='Ya existe un registro con ese Num. de Serie';
+}
+
+if ($this->userIdDosentExist($this->usuario_id)) {
+  $this->errors[] = 'No existe un usuario con ese ID';
+}
+
+return empty($this->errors);
+}
+
+protected function userIdDosentExist($usuario_id)
+{
+  $sql = "SELECT *
+          FROM registro_usuario
+          WHERE id = :usuario_id";
+
+  $db = Database::getConn();
+  $stmt = $db->prepare($sql);
+  $stmt->bindValue(':usuario_id', $usuario_id, PDO::PARAM_INT);
+
+  $stmt->execute();
+  
+  return $stmt->fetch() === false;
+}
+
+
+protected function serialNumberExists($serial_number)
+{
+ 
+  $sql = "SELECT *
+  FROM registro_mascota
+  WHERE serial_number = :serial_number";
+
+$db = Database::getConn();
+$stmt = $db->prepare($sql);
+$stmt->bindValue(':serial_number', $serial_number, PDO::PARAM_INT);
+
+
+$stmt->execute();
+return $stmt->fetch() !== false;
+
+}
+
+
+
+public function delete($conn)
+{
+  $sql= "DELETE FROM registro_mascota 
+         WHERE id= :id";
+
+ $stmt = $conn->prepare($sql);
+
+ $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
+    
+
+return $stmt->execute();
+}
+
+
+public function create($conn)
+{
+  if ($this->validate())
+  {
+
+  $sql= "INSERT INTO registro_mascota (serial_number, mascot_name, age, gender, sickness, sterilized, phone_number, usuario_id)
+           VALUES (:serial_number,
+                   :mascot_name,
+                   :age,
+                   :gender,
+                   :sickness,
+                   :sterilized,
+                   :phone_number,
+                   :usuario_id)";
+                   
+          
+
+          $stmt = $conn->prepare($sql);
+          
+          $stmt->bindValue(':serial_number', $this->serial_number, PDO::PARAM_INT);
+          $stmt->bindValue(':mascot_name', $this->mascot_name, PDO::PARAM_STR);
+          $stmt->bindValue(':age', $this->age, PDO::PARAM_INT);
+          $stmt->bindValue(':gender', $this->gender, PDO::PARAM_INT);
+          $stmt->bindValue(':sickness', $this->sickness, PDO::PARAM_STR);
+          $stmt->bindValue(':sterilized', $this->sterilized, PDO::PARAM_INT);
+          $stmt->bindValue(':phone_number', $this->phone_number, PDO::PARAM_INT);
+          $stmt->bindValue(':usuario_id', $this->usuario_id, PDO::PARAM_INT);
+
+          if ($this->sickness == '') 
+          {
+            $stmt->bindValue(':sickness', null, PDO::PARAM_NULL);
+          } 
+          else 
+          {
+            $stmt->bindValue(':sickness', $this->sickness, PDO::PARAM_STR);
+          }     
+
+          
+          if ($stmt->execute()) 
+          {
+            $this->id = $conn->lastInsertId();
+            return true;
+          }
+  }
+  else
+  {
+    return false;
+  }
+}
+
+
+public function setImageFile($conn, $filename)
+{
+    $sql = "UPDATE registro_mascota
+            SET image_file = :image_file
+            WHERE id = :id";
+
+    $stmt = $conn->prepare($sql);
+
+    $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
+    $stmt->bindValue(':image_file', $filename, PDO::PARAM_STR);
+
+    return $stmt->execute();
+}
+}
